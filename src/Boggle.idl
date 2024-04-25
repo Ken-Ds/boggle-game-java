@@ -1,0 +1,28 @@
+module Boggle{
+
+    struct Player{
+        string id;
+        string username;
+        string password;
+        long highScore;
+    };
+
+    struct playerWords{
+        string playerWords;
+        long wordScore;
+    };
+
+    struct InGame{
+        long round;
+        string playerID;
+        long playerScoreInRound;
+        long playerScoreInGame;
+    };
+
+    interface ClientInterface{
+        void logIn(in string username, in string getPassword);
+        void startGame(in string playerID);
+        long submitWord(in string submitWord);
+    };
+
+};
