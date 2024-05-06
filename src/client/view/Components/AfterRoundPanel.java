@@ -1,4 +1,4 @@
-package client.View.Components;
+package client.view.Components;
 
 
 import java.awt.Color;
@@ -276,7 +276,7 @@ public class AfterRoundPanel extends JPanel {
         add(labelRoundScore);
         labelRoundScore.setBounds(430, 40, 330, 50);
 
-        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/Miguel.gif");
+        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/Miguel.gif");
         if (imageURL != null) {
             ImageIcon icon = new ImageIcon(imageURL);
             labelICON.setIcon(icon);

@@ -1,6 +1,6 @@
-package client.View.Menu;
+package client.view.Menu;
 
-import client.View.Components.WaitingPlayerPanel;
+import client.view.Components.WaitingPlayerPanel;
 
 
 import javax.swing.*;

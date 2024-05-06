@@ -1,4 +1,4 @@
-package client.Controller;
+package server.controller;
 
 public class Controller {
 }

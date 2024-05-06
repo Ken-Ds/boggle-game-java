@@ -1,6 +1,6 @@
-package client.View.Menu;
+package client.view.Menu;
 
-import client.View.Components.LogInPanel;
+import client.view.Components.LogInPanel;
 
 
 import javax.swing.*;

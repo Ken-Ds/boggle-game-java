@@ -1,4 +1,4 @@
-package client.View.Components;
+package client.view.Components;
 
 
 import java.awt.Color;
@@ -605,7 +605,7 @@ public class InGamePanel extends JPanel {
         add(panelTimer);
         panelTimer.setBounds(470, 590, 210, 72);
 
-        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/inGameIconRight (1).png");
+        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/inGameIconRight (1).png");
         if (imageURL != null) {
             ImageIcon icon = new ImageIcon(imageURL);
             labelICONLeft.setIcon(icon);
@@ -615,7 +615,7 @@ public class InGamePanel extends JPanel {
             System.out.println("Image not found in classpath.");
         }
 
-        URL imageURL1 = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/inGameLeft (1).png");
+        URL imageURL1 = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/inGameLeft (1).png");
         if (imageURL1 != null) {
             ImageIcon icon = new ImageIcon(imageURL1);
             labelIconRight.setIcon(icon);

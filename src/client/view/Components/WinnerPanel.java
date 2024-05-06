@@ -1,4 +1,4 @@
-package client.View.Components;
+package client.view.Components;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -197,7 +197,7 @@ public class WinnerPanel extends JPanel {
         add(labelPlayerWinner);
         labelPlayerWinner.setBounds(460, 320, 280, 50);
 
-        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/pat.gif");
+        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/pat.gif");
         if (imageURL != null) {
             ImageIcon icon = new ImageIcon(imageURL);
             labelPicture.setIcon(icon);
@@ -207,7 +207,7 @@ public class WinnerPanel extends JPanel {
             System.out.println("Image not found in classpath.");
         }
 
-        URL imageURL1 = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/shrek.gif");
+        URL imageURL1 = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/shrek.gif");
         if (imageURL1 != null) {
             ImageIcon icon = new ImageIcon(imageURL1);
             labelICON.setIcon(icon);
@@ -217,7 +217,7 @@ public class WinnerPanel extends JPanel {
             System.out.println("Image not found in classpath.");
         }
 
-        URL imageURL2 = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/shrek.gif");
+        URL imageURL2 = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/shrek.gif");
         if (imageURL2 != null) {
             ImageIcon icon = new ImageIcon(imageURL2);
             labelICON1.setIcon(icon);

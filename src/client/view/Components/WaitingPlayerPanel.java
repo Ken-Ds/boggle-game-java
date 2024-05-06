@@ -1,4 +1,4 @@
-package client.View.Components;
+package client.view.Components;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -161,7 +161,7 @@ public class WaitingPlayerPanel extends JPanel {
         add(scrollPlayers);
         scrollPlayers.setBounds(10, 80, 220, 570);
 
-        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/WaitingIconn.png");
+        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/WaitingIconn.png");
         if (imageURL != null) {
             ImageIcon icon = new ImageIcon(imageURL);
             labelIcon.setIcon(icon);

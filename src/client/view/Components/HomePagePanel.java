@@ -1,4 +1,4 @@
-package client.View.Components;
+package client.view.Components;
 import java.awt.Color;
 
 import java.awt.Dimension;
@@ -182,7 +182,7 @@ public class HomePagePanel extends JPanel {
         add(panelLeaderBoard);
         panelLeaderBoard.setBounds(920, 20, 220, 50);
 
-        URL icon1ImageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/s13.png");
+        URL icon1ImageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/s13.png");
         if (icon1ImageURL != null) {
             labelIcon1.setIcon(new ImageIcon(icon1ImageURL));
             add(labelIcon1);
@@ -191,7 +191,7 @@ public class HomePagePanel extends JPanel {
             System.err.println("Error: Icon 1 image not found in the classpath.");
         }
 
-        URL icon2ImageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/s12.png");
+        URL icon2ImageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/s12.png");
         if (icon2ImageURL != null) {
             labelIcon2.setIcon(new ImageIcon(icon2ImageURL));
             add(labelIcon2);
@@ -207,7 +207,7 @@ public class HomePagePanel extends JPanel {
         labelTitle.setBounds(370, 50, 470, 80);
 
 
-        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/ForestGIF.gif");
+        URL imageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/ForestGIF.gif");
         if (imageURL != null) {
             ImageIcon icon = new ImageIcon(imageURL);
             labelGIF.setIcon(icon);

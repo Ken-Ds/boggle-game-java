@@ -1,4 +1,4 @@
-package client.View.Components;
+package client.view.Components;
 
 
 import javax.swing.*;
@@ -56,7 +56,7 @@ public class LogInPanel extends JPanel {
         add(textPass);
         textPass.setBounds(380, 230, 200, 30);
 
-        URL shrekImageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/shrekkkk-ezgif.com-resize.gif");
+        URL shrekImageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/shrekkkk-ezgif.com-resize.gif");
         if (shrekImageURL != null) {
             labelShrek.setIcon(new ImageIcon(shrekImageURL));
             add(labelShrek);
@@ -65,7 +65,7 @@ public class LogInPanel extends JPanel {
             System.err.println("Error: Shrek image not found in the classpath.");
         }
 
-        URL backgroundImageURL = ClassLoader.getSystemClassLoader().getResource("client/View/Icon/forestt.gif");
+        URL backgroundImageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/forestt.gif");
         if (backgroundImageURL != null) {
             labelBackground.setIcon(new ImageIcon(backgroundImageURL));
             add(labelBackground);

@@ -1,4 +1,4 @@
-package server.View;
+package client.view;
 
 public class MainView {
 }

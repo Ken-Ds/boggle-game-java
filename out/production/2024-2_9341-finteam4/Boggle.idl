@@ -7,22 +7,19 @@ module Boggle{
         long highScore;
     };
 
-    struct playerWords{
-        string playerWords;
-        long wordScore;
-    };
-
-    struct InGame{
+    struct Game{
         long round;
-        string playerID;
-        long playerScoreInRound;
-        long playerScoreInGame;
+        typedef sequence <Player> players;
+        typedef sequence <long> playerScoreInRound;
+        typedef sequence <long> playerScoreInGame;
     };
 
     interface ClientInterface{
         void logIn(in string username, in string getPassword);
-        void startGame(in string playerID);
-        long submitWord(in string submitWord);
+        boolean isLoggedIn();
+        void startGame();
+        long submitWord(in string word);
+        long getScore();
     };
 
 };

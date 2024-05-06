@@ -1,8 +1,7 @@
-package client.View.Menu;
+package client.view.Menu;
 
-import client.View.Components.AfterRoundPanel;
+import client.view.Components.AfterRoundPanel;
 
-import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;

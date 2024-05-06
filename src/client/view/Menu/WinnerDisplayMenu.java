@@ -1,16 +1,16 @@
-package client.View.Menu;
+package client.view.Menu;
 
-import client.View.Components.InGamePanel;
+import client.view.Components.WinnerPanel;
 
 import javax.swing.*;
 
-public class InGameMenu extends JPanel {
-    private InGamePanel inGamePanel;
+public class WinnerDisplayMenu extends JPanel {
+    private WinnerPanel winnerDisplayPanel;
 
     /**
-     * Creates new form InGame
+     * Creates new form winnerDisplayMenu
      */
-    public InGameMenu() {
+    public WinnerDisplayMenu() {
         initComponents();
     }
 
@@ -23,17 +23,17 @@ public class InGameMenu extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        inGamePanel = new InGamePanel();
+        winnerDisplayPanel = new WinnerPanel();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(inGamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
+                        .addComponent(winnerDisplayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(inGamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+                        .addComponent(winnerDisplayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
     }// </editor-fold>
 
