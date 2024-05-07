@@ -53,7 +53,7 @@ public class ServerMain extends JFrame {
 
         serverMenu1.setOpaque(true);
 
-        shrek2Label.setIcon(new ImageIcon("src/icons/shrek-mike.gif"));
+        shrek2Label.setIcon(new ImageIcon("src/server/view/icons/shrek-mike.gif"));
         shrek2Label.setText("shrek2Label");
 
         GroupLayout serverMenuPanelLayout = new GroupLayout(serverMenuPanel);
@@ -82,7 +82,7 @@ public class ServerMain extends JFrame {
         getContentPane().add(serverMenuPanel, BorderLayout.CENTER);
         getContentPane().add(serverHeader, BorderLayout.PAGE_START);
 
-        backgroundLabel.setIcon(new ImageIcon("src/icons/moss1_1.gif")); // NOI18N
+        backgroundLabel.setIcon(new ImageIcon("src/server/view/icons/moss1_1.gif")); // NOI18N
         getContentPane().add(backgroundLabel, BorderLayout.LINE_END);
 
 

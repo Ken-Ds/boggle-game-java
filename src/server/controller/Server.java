@@ -27,7 +27,6 @@ public class Server{
 
     public void startServer(String args[]){
         orb = ORB.init(args,null);
-
         try {
             POA rootPOA = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             rootPOA.the_POAManager().activate();
@@ -46,6 +45,8 @@ public class Server{
 
             ncRef.rebind(path,cRef);
             System.out.println("Server Running");
+            orb.run();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

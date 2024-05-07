@@ -9,9 +9,9 @@ module Boggle{
 
     struct Game{
         long round;
-        typedef sequence <Player> players;
-        typedef sequence <long> playerScoreInRound;
-        typedef sequence <long> playerScoreInGame;
+        sequence <Player> players;
+        sequence <long> playerScoreInRound;
+        sequence <long> playerScoreInGame;
     };
 
     interface ClientInterface{
