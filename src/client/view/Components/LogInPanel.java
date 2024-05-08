@@ -1,6 +1,8 @@
 package client.view.Components;
 
 
+import client.view.logic.Authentication;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
@@ -16,6 +18,11 @@ public class LogInPanel extends JPanel {
 
     public LogInPanel() {
         initComponents();
+        buttonLogIn.addActionListener(e->{
+            String username = textUsername.getText();
+            String password = textPass.getText();
+            Authentication.login(username, password);
+        });
     }
 
     private void initComponents() {

@@ -17,7 +17,6 @@ public class LogIn extends JFrame {
     private void initComponents() {
 
         logInPanel = new LogInPanel();
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
