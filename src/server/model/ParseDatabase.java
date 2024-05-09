@@ -19,7 +19,7 @@ public class ParseDatabase {
     public ArrayList<Player> getUsers(){
         ArrayList<Player> players = new ArrayList<>();
         try {
-            String query = "SELECT * FROM USERS";
+            String query = "SELECT * FROM accounts";
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()){
@@ -34,13 +34,39 @@ public class ParseDatabase {
         return players;
     }
 
-    public int getScore(String word){
+    public int getHighScore(String word){
         int score = 0;
         try {
-            String query = "SELECT score FROM WORDS WHERE ";
+            String query = "SELECT score FROM WORDS WHERE (word = ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                score = resultSet.getInt(1);
+            }
+            resultSet.close();
+            return score;
         }catch (Exception e){
             e.printStackTrace();
         }
         return score;
+    }
+
+    public ArrayList<Integer> getLeaderBoards(){
+        ArrayList<Integer> topFive = new ArrayList<>();
+        try {
+            String query ="SELECT highscore FROM accounts ORDER BY highscore DESC LIMIT 5";
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                int score = resultSet.getInt(1);
+                topFive.add(score);
+            }
+            resultSet.close();
+            return topFive;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return topFive;
     }
 }

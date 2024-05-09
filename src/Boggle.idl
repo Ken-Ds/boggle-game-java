@@ -19,14 +19,17 @@ module Boggle{
     };
 
     interface ClientInterface{
-        sequence <long> leaderBoards;
+        typedef sequence <char> CharSeq;
+        typedef sequence <long> IntSeq;
+
+        IntSeq getLeaderBoards();
         void logIn(in string username, in string getPassword) raises (AlreadyLoggedIn, IsNotUser);
         void startGame(in string username);
         long getRoundTime(in string username);
         long getWaitingTime(in string username);
-        sequence <char> letter(in string username);
+        CharSeq getLetters(in string username);
         long submitWord(in string word, in string username);
-        long getScore(string username);
+        long getScore(in string username);
         string getRoundWinner(in string username);
     };
 };
