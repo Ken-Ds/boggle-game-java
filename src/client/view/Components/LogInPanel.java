@@ -1,6 +1,7 @@
 package client.view.Components;
 
 
+import client.view.Menu.HomePage;
 import client.view.logic.Authentication;
 
 import javax.swing.*;
@@ -18,11 +19,7 @@ public class LogInPanel extends JPanel {
 
     public LogInPanel() {
         initComponents();
-        buttonLogIn.addActionListener(e->{
-            String username = textUsername.getText();
-            String password = textPass.getText();
-            Authentication.login(username, password);
-        });
+
     }
 
     private void initComponents() {
@@ -34,6 +31,9 @@ public class LogInPanel extends JPanel {
         textPass = new JTextField();
         labelShrek = new JLabel();
         labelBackground = new JLabel();
+        buttonLogIn.addActionListener(e->{
+            new HomePage().setVisible(true);
+        });
 
         setBackground(new java.awt.Color(193, 232, 153));
         setLayout(null);

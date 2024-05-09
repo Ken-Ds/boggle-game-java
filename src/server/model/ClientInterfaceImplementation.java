@@ -1,6 +1,7 @@
 package server.model;
 
 import Boggle.ClientInterfacePOA;
+import server.controller.Server;
 
 public class ClientInterfaceImplementation extends ClientInterfacePOA {
     @Override

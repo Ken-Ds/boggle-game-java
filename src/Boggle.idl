@@ -1,4 +1,8 @@
 module Boggle{
+    exception AlreadyLoggedIn{};
+    exception IsNotUser{};
+    exception GameNotStarted{};
+
 
     struct Player{
         string id;
@@ -15,11 +19,14 @@ module Boggle{
     };
 
     interface ClientInterface{
-        void logIn(in string username, in string getPassword);
-        boolean isLoggedIn();
-        void startGame();
-        long submitWord(in string word);
-        long getScore();
+        sequence <long> leaderBoards;
+        void logIn(in string username, in string getPassword) raises (AlreadyLoggedIn, IsNotUser);
+        void startGame(in string username);
+        long getRoundTime(in string username);
+        long getWaitingTime(in string username);
+        sequence <char> letter(in string username);
+        long submitWord(in string word, in string username);
+        long getScore(string username);
+        string getRoundWinner(in string username);
     };
-
 };

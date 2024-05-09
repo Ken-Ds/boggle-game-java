@@ -13,11 +13,11 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 import server.model.ClientInterfaceImplementation;
+import server.view.mainComponents.ServerMain;
 
 import java.util.*;
 
 public class Server{
-
     private ORB orb;
     private Map<String, Player> players;
     private List<Player> currentGame;
@@ -45,6 +45,7 @@ public class Server{
 
             ncRef.rebind(path,cRef);
             System.out.println("Server Running");
+            new ServerMain().setVisible(true);
             orb.run();
 
         } catch (Exception e) {
@@ -54,11 +55,6 @@ public class Server{
     }
 
     public void startGame(String username){
-        Player player = players.get(username);
-        if(currentGame.size() < 2){
-            currentGame.add(player);
-            if(currentGame.size() == 2){
-            }
-        }
+
     }
 }
