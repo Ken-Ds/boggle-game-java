@@ -8,6 +8,11 @@ import server.controller.Server;
 public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
     @Override
+    public int[] getLeaderBoards() {
+        return new int[0];
+    }
+
+    @Override
     public void logIn(String username, String getPassword) throws AlreadyLoggedIn, IsNotUser {
 
     }

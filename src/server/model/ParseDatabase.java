@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class ParseDatabase {
     private static Connection connection;
 
-    public static void setConnection() {
+    public  void setConnection() {
         try {
-            connection = DriverManager.getConnection("jdbc://localhost:3306/boggle?user=root&password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/boggle?user=root&password");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -68,5 +68,44 @@ public class ParseDatabase {
             e.printStackTrace();
         }
         return topFive;
+    }
+
+    public void addUser(String username, String password){
+        try {
+            String query = "INSERT INTO accounts(username, password) VALUES(?,?)";
+            PreparedStatement preparedStatement =  connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2,password);
+            preparedStatement.execute();
+            System.out.println("User Added");
+        }catch (Exception e){
+            System.out.println("Failed to Add User");
+        }
+    }
+
+    public void deleteUser(int id){
+        try{
+            String query = "DELETE FROM accounts WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,id);
+            preparedStatement.execute();
+            System.out.println("User Deleted");
+        }catch (Exception e){
+            System.out.println("Failed to Delete User");
+        }
+    }
+
+    public void editUser(int id, String newUserName, String newPassword){
+        try{
+            String query = "UPDATE accounts SET username=?, password=? WHERE id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(3,id);
+            preparedStatement.setString(1,newUserName);
+            preparedStatement.setString(2, newPassword);
+            preparedStatement.execute();
+            System.out.println("Account has been Edited");
+        }catch (Exception e){
+            System.out.println("Account Not Edited");
+        }
     }
 }
