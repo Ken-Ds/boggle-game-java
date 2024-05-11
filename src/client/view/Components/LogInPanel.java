@@ -2,10 +2,13 @@ package client.view.Components;
 
 
 import client.view.Menu.HomePage;
+import client.view.Menu.LogIn;
 import client.view.logic.Authentication;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 public class LogInPanel extends JPanel {
@@ -16,10 +19,11 @@ public class LogInPanel extends JPanel {
     private JLabel labelUsername;
     private JTextField textPass;
     private JTextField textUsername;
+    private HomePage homePage;
 
     public LogInPanel() {
         initComponents();
-
+        this.homePage = new HomePage();
     }
 
     private void initComponents() {
@@ -31,9 +35,16 @@ public class LogInPanel extends JPanel {
         textPass = new JTextField();
         labelShrek = new JLabel();
         labelBackground = new JLabel();
-        buttonLogIn.addActionListener(e->{
-            new HomePage().setVisible(true);
+        buttonLogIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.setVisible(true);
+                LogIn logInFrame = (LogIn) SwingUtilities.getWindowAncestor(LogInPanel.this);
+                logInFrame.dispose();
+
+            }
         });
+        add(buttonLogIn);
 
         setBackground(new java.awt.Color(193, 232, 153));
         setLayout(null);
@@ -63,14 +74,6 @@ public class LogInPanel extends JPanel {
         add(textPass);
         textPass.setBounds(380, 230, 200, 30);
 
-        URL shrekImageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/shrekkkk-ezgif.com-resize.gif");
-        if (shrekImageURL != null) {
-            labelShrek.setIcon(new ImageIcon(shrekImageURL));
-            add(labelShrek);
-            labelShrek.setBounds(-20, 380, 160, 170);
-        } else {
-            System.err.println("Error: Shrek image not found in the classpath.");
-        }
 
         URL backgroundImageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/forestt.gif");
         if (backgroundImageURL != null) {
