@@ -3,21 +3,6 @@ module Boggle{
     exception IsNotUser{};
     exception GameNotStarted{};
 
-
-    struct Player{
-        string id;
-        string username;
-        string password;
-        long highScore;
-    };
-
-    struct Game{
-        long round;
-        sequence <Player> players;
-        sequence <long> playerScoreInRound;
-        sequence <long> playerScoreInGame;
-    };
-
     interface ClientInterface{
         typedef sequence <char> CharSeq;
         typedef sequence <long> IntSeq;

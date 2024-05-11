@@ -1,9 +1,8 @@
-package server.controller;
+package server.model;
+
 
 import Boggle.ClientInterface;
 import Boggle.ClientInterfaceHelper;
-import Boggle.Player;
-import Boggle._ClientInterfaceStub;
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NameComponent;
@@ -14,6 +13,7 @@ import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 import server.model.ClientInterfaceImplementation;
 import server.model.ParseDatabase;
+import server.referenceclass.Player;
 import server.view.mainComponents.ServerMain;
 
 import java.util.*;
@@ -24,7 +24,8 @@ public class Server{
     private List<Player> currentGame;
     private int waitingTime;
     private int roundDuration;
-    private Set<String> usedWords;
+    public static ArrayList<Player> playersLoggedIn = new ArrayList<>();
+
 
     public void startServer(String args[]){
         orb = ORB.init(args,null);
@@ -45,17 +46,20 @@ public class Server{
             NameComponent path[] = ncRef.to_name(name);
 
             ncRef.rebind(path,cRef);
-            System.out.println("Server Running");
             new ServerMain().setVisible(true);
             orb.run();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
+        System.out.println("Server Running");
     }
 
     public void startGame(String username){
 
+    }
+
+    public void logIn(String username){
+        playersLoggedIn.add(new ParseDatabase().getPlayerInfo(username));
     }
 }

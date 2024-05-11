@@ -1,5 +1,6 @@
 package server.model;
 
+import Boggle.IsNotUser;
 import server.referenceclass.Player;
 
 import java.sql.*;
@@ -13,6 +14,15 @@ public class ParseDatabase {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/boggle?user=root&password");
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    public void validateIfUser(String username, String password) throws IsNotUser{
+        ArrayList<Player> players = getUsers();
+        for (Player player : players){
+            if(!(player.getUsername().equals(username) && player.getPassword().equals(password))){
+                throw new IsNotUser("User not Found");
+            }
         }
     }
 
@@ -34,10 +44,10 @@ public class ParseDatabase {
         return players;
     }
 
-    public int getHighScore(String word){
+    public int getWordScore(String word){
         int score = 0;
         try {
-            String query = "SELECT score FROM WORDS WHERE (word = ?)";
+            String query = "SELECT score FROM WORDS WHERE word = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
             ResultSet resultSet = statement.executeQuery();
@@ -106,6 +116,48 @@ public class ParseDatabase {
             System.out.println("Account has been Edited");
         }catch (Exception e){
             System.out.println("Account Not Edited");
+        }
+    }
+
+    public Player getPlayerInfo(String username){
+        Player player = null;
+        try {
+            String query = "SELECT id, username, password, highscore FROM accounts WHERE username=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                player = new Player(resultSet.getInt(1),resultSet.getString(2));
+            }
+            resultSet.close();
+            System.out.println("Fetched" + player.getId() + " " + player.getUsername());
+        }catch (Exception e){
+            System.out.println("Unable to Fetch Player Info");
+        }
+        return player;
+    }
+
+    public void setHighScore(int id, int newHighScore){
+        int highScore = 0;
+        try {
+            String query = "SELECT highscore FROM accounts WHERE id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                highScore = resultSet.getInt(1);
+            }
+            resultSet.close();
+
+            if (highScore < newHighScore) {
+                String query2 = "UPDATE accounts SET highscore=? WHERE id=?";
+                PreparedStatement preparedStatement2 = connection.prepareStatement(query);
+                preparedStatement2.setInt(1,highScore);
+                preparedStatement2.setInt(2,id);
+                preparedStatement2.execute();
+            }
+            System.out.println("HighScore Changed");
+        }catch (Exception e){
+            System.out.println("Unable to edit HighScore");
         }
     }
 }
