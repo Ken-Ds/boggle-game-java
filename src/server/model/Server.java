@@ -16,7 +16,6 @@ import java.util.*;
 
 public class Server{
     private ORB orb;
-    private Map<String, Player> players;
     private List<Player> currentGame;
     private static int waitingTime;
     private static int roundTime;
@@ -25,6 +24,9 @@ public class Server{
 
     public static Hashtable<Integer,Game> games = new Hashtable<>();
 
+    public static Hashtable<String,ArrayList<String>> playerWords = new Hashtable<>();
+
+    ParseDatabase parseDatabase = new ParseDatabase();
 
     public void startServer(String args[]){
         orb = ORB.init(args,null);
@@ -52,7 +54,6 @@ public class Server{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Server Running");
     }
 
     public static void playGame(Player player){
@@ -62,7 +63,7 @@ public class Server{
             gameId = games.size();
             games.put(gameId, new Game(player, waitingTime, roundTime));
         }
-        games.get(gameId).startWaitTimer();
+        startWaitTimer(gameId);
     }
 
     public static void joinGame(Player player){
@@ -73,8 +74,12 @@ public class Server{
         }
     }
 
-    public static void startGame(Player player){
-
+    public static void startGame(int gameId){
+        games.get(gameId).gameStart();
+        for (Player player : games.get(gameId).getPlayers()) {
+            playerWords.put(player.getUsername(), new ArrayList<>());
+        }
+        startRoundTimer(gameId);
     }
 
     public static void setWaitingTime(int waitingTime){
@@ -86,9 +91,7 @@ public class Server{
     }
 
     public static int checkPlayerGame(Player player){
-        System.out.println("Number of games: " + games.size());
         for (int x = 0; x <= games.size()-1; x++){
-            System.out.println(games.get(x).getPlayers());
             for (int y = 0; y <= games.get(x).getPlayers().size()-1; y++){
                 if (player.getId() == games.get(x).getPlayers().get(y).getId()){
                     return x;
@@ -109,22 +112,90 @@ public class Server{
         return false;
     }
 
-    /*public static void startTimer(int seconds, int gameId) {
+    public static void startWaitTimer(int gameId) {
+        int temp = games.get(gameId).getWaitingTime();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
-            int countdown = seconds;
+            int countdown = temp;
             @Override
             public void run() {
                 if (countdown > 0) {
                     System.out.println("Time remaining: " + countdown + " seconds");
                     countdown--;
+                    games.get(gameId).setWaitingTime(countdown);
                 } else {
-                    System.out.println("Game Started!");
-                    games.get(gameId).gameStart();
+                    if(games.get(gameId).getPlayers().size() > 1 && !games.get(gameId).thereIsWinner()){
+                        System.out.println("Game Started!");
+                        games.get(gameId).gameStart();
+                        games.get(gameId).nextRound();
+                        waitingTime = temp;
+                        startGame(gameId);
+                    } else {
+                        games.get(gameId).gameEnd();
+                        if (games.get(gameId).gameWinner() != null){
+                            System.out.println(games.get(gameId).gameWinner()+ "won the game");
+
+                        } else {
+                            System.out.println("Game Not Started");
+                        }
+                        removeGameAfter1(gameId);
+                    }
                     timer.cancel();
                 }
             }
         };
         timer.scheduleAtFixedRate(task, 1000, 1000);
-    }*/
+    }
+
+    public static void startRoundTimer(int gameId) {
+        int temp = games.get(gameId).getRoundTime();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int countdown = temp;
+            @Override
+            public void run() {
+                if (countdown > 0) {
+                    System.out.println("Time remaining: " + countdown + " seconds");
+                    countdown--;
+                    games.get(gameId).setRoundTime(countdown);
+                } else {
+                    System.out.println("Round Ended!");
+                    System.out.println(playerWords);
+                    setGameRoundScore(gameId);
+                    timer.cancel();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
+    public static void removeGameAfter1(int gameId){
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int countdown = 1;
+            @Override
+            public void run() {
+                if (countdown > 0) {
+                    countdown--;
+                } else {
+                    games.remove(gameId);
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
+    public static void setGameRoundScore(int gameId){
+        ParseDatabase parseDatabase = new ParseDatabase();
+        for (Player player :games.get(gameId).getPlayers()) {
+            ArrayList<String> words = Server.playerWords.get(player.getUsername());
+            int score = 0;
+            if (words != null) {
+                for (String word : words) {
+                    score = score + parseDatabase.getWordScore(word);
+                }
+                games.get(gameId).setPlayerScore(player,score);
+            }
+        };
+    }
 }

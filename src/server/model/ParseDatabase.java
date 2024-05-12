@@ -131,7 +131,6 @@ public class ParseDatabase {
                 player = new Player(resultSet.getInt(1),resultSet.getString(2));
             }
             resultSet.close();
-            System.out.println("Fetched" + player.getId() + " " + player.getUsername());
         }catch (Exception e){
             System.out.println("Unable to Fetch Player Info");
         }
@@ -160,5 +159,27 @@ public class ParseDatabase {
         }catch (Exception e){
             System.out.println("Unable to edit HighScore");
         }
+    }
+
+    public boolean isValidWord(String word){
+        try{
+            String query = "SELECT word FROM WORDS WHERE word = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,word);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                if(word.equals(resultSet.getString(1))) {
+                    System.out.println("True");
+                    return true;
+                }
+
+            }
+            System.out.println("false");
+            return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

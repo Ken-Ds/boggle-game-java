@@ -3,9 +3,11 @@ package server.model;
 import Boggle.AlreadyLoggedIn;
 import Boggle.ClientInterfacePOA;
 import Boggle.IsNotUser;
+import server.referenceclass.Game;
 import server.referenceclass.Player;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
@@ -72,17 +74,92 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
     }
 
     @Override
-    public int submitWord(String word, String username) {
-        return 0;
+    public void submitWord(String word, String username) {
+        Boolean isUnique = true;
+        Player player = parseDatabase.getPlayerInfo(username);
+        if (parseDatabase.isValidWord(word)) {
+            System.out.println("Valid Word");
+            int gameId = Server.checkPlayerGame(player);
+            ArrayList<Player> players = Server.games.get(gameId).getPlayers();
+            for (int x = 0; x <= players.size()-1; x++){
+                Player player1 = players.get(x);
+                ArrayList<String> player1Words = Server.playerWords.get(player1.getUsername());
+                for (int y = 0; y <= player1Words.size()-1; y++){
+                    if (word.equals(player1Words.get(y))){
+                        player1Words.remove(y);
+                        isUnique = false;
+                    }
+                    Server.playerWords.put(player1.getUsername(),player1Words);
+                }
+            }
+            if (isUnique){
+                ArrayList<String> playerWords = Server.playerWords.get(username);
+                playerWords.add(word);
+                Server.playerWords.put(username,playerWords);
+            }
+        }
     }
 
     @Override
-    public int getScore(String username) {
-        return 0;
+    public String[] getGamePlayers(String username) {
+        Player player = parseDatabase.getPlayerInfo(username);
+        int game = Server.checkPlayerGame(player);
+        ArrayList<Player> players = Server.games.get(game).getPlayers();
+        String[] names = new String[players.size()];
+        for (int x = 0; x < players.size(); x++){
+            names[x] = players.get(x).getUsername();
+        }
+        return names;
     }
+
+    @Override
+    public int[] getRoundScores(String username) {
+        Player player =parseDatabase.getPlayerInfo(username);
+        int game = Server.checkPlayerGame(player);
+        ArrayList<Integer> roundScores = Server.games.get(game).getRoundScores();
+        int[] scores = new int[roundScores.size()];
+        for (int x = 0; x < roundScores.size(); x++){
+            scores[x] = roundScores.get(x);
+        }
+        return scores;
+    }
+
+    @Override
+    public int[] getGameScores(String username) {
+        Player player =parseDatabase.getPlayerInfo(username);
+        int game = Server.checkPlayerGame(player);
+        ArrayList<Integer> gameScores = Server.games.get(game).getGameScores();
+        int[] scores = new int[gameScores.size()];
+        for (int x = 0; x < gameScores.size(); x++){
+            scores[x] = gameScores.get(x);
+        }
+        return scores;
+    }
+
+    @Override
+    public int[] getOverAllScores(String username) {
+        Player player =parseDatabase.getPlayerInfo(username);
+        int game = Server.checkPlayerGame(player);
+        ArrayList<Integer> overAllScores = Server.games.get(game).getOverAllScores();
+        int[] scores = new int[overAllScores.size()];
+        for (int x = 0; x < overAllScores.size(); x++){
+            scores[x] = overAllScores.get(x);
+        }
+        return scores;
+    }
+
 
     @Override
     public String getRoundWinner(String username) {
-        return null;
+        Player player = parseDatabase.getPlayerInfo(username);
+        int game = Server.checkPlayerGame(player);
+        return Server.games.get(game).gameWinner().getUsername();
+    }
+
+    @Override
+    public boolean gameStatus(String username) {
+        Player player = parseDatabase.getPlayerInfo(username);
+        int game = Server.checkPlayerGame(player);
+        return Server.games.get(game).getStat();
     }
 }

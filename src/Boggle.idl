@@ -6,6 +6,7 @@ module Boggle{
     interface ClientInterface{
         typedef sequence <char> CharSeq;
         typedef sequence <long> IntSeq;
+        typedef sequence <string> StringSeq;
 
         IntSeq getLeaderBoards();
         void logIn(in string username, in string password) raises (AlreadyLoggedIn, IsNotUser);
@@ -13,9 +14,12 @@ module Boggle{
         long getRoundTime(in string username);
         long getWaitingTime(in string username);
         CharSeq getLetters(in string username);
-        long submitWord(in string word, in string username);
-        long getScore(in string username);
+        void submitWord(in string word, in string username);
+        StringSeq getGamePlayers(in string username);
+        IntSeq getRoundScores(in string username);
+        IntSeq getGameScores(in string username);
+        IntSeq getOverAllScores(in string username);
         string getRoundWinner(in string username);
-
+        boolean gameStatus(in string username);
     };
 };

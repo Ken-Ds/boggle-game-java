@@ -13,9 +13,10 @@ module Boggle{
         long getRoundTime(in string username);
         long getWaitingTime(in string username);
         CharSeq getLetters(in string username);
-        long submitWord(in string word, in string username);
-        long getScore(in string username);
+        void submitWord(in string word, in string username);
+        long getRoundScore(in string username);
+        long getGameScore(in string username);
         string getRoundWinner(in string username);
-
+        boolean gameStatus(in string username);
     };
 };

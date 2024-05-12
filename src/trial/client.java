@@ -30,9 +30,21 @@ public class client {
             if (s.equalsIgnoreCase("s")) {
                 connect.clientInterfaceImplementation.startGame(username);
                 startTime(connect.clientInterfaceImplementation.getWaitingTime(username));
-                do {
+                while (connect.clientInterfaceImplementation.getWaitingTime(username)!=0){
+                }
 
-                }while (true);
+                while ((connect.clientInterfaceImplementation.getRoundTime(username)+1) != 0){
+                    System.out.print("Enter Words: ");
+                    String word = scanner.nextLine();
+                    connect.clientInterfaceImplementation.submitWord(word,username);
+                    System.out.println(connect.clientInterfaceImplementation.getRoundTime(username));
+                    if (connect.clientInterfaceImplementation.getRoundTime(username) == 0){
+                        break;
+                    }
+                }
+                System.out.println("Round Ended");
+
+                System.out.println("Your Score is ");
             } else
                 System.exit(0);
         } catch (AlreadyLoggedIn e) {
@@ -54,8 +66,12 @@ public class client {
                     System.out.println("Time remaining: " + countdown + " seconds");
                     countdown--;
                 } else {
-                    System.out.println("Game Started!");
-                    System.out.println(showLetters(connect.clientInterfaceImplementation.getLetters(username)));
+                    if(connect.clientInterfaceImplementation.gameStatus(username)) {
+                        System.out.println("Game Started!");
+                        System.out.println(showLetters(connect.clientInterfaceImplementation.getLetters(username)));
+                    } else {
+                        System.out.println("Game Not Started");
+                    }
                     timer.cancel();
                 }
             }
