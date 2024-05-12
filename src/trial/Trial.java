@@ -1,24 +1,28 @@
 package trial;
 
-import java.util.ArrayList;
-import java.util.Random;
+import server.referenceclass.Game;
+
+import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Trial {
     public static void main(String[] args) {
-        ArrayList<Character> characters = generateRandomLetters();
-        int x = 1;
-        for (char letter : characters){
-            System.out.println(x+". " +letter);
-            x++;
-        }
-    }
-
-    public static ArrayList<Character> generateRandomLetters(){
-        ArrayList<Character> characters = new ArrayList<>();
-        Random random = new Random();
-        for (int x = 0; x < 20; x++){
-            characters.add((char) (random.nextInt(26)+'A'));
-        }
-        return characters;
+        int seconds = 30;
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int countdown = seconds;
+            @Override
+            public void run() {
+                if (countdown > 0) {
+                    System.out.println("Time remaining: " + countdown + " seconds");
+                    countdown--;
+                } else {
+                    System.out.println("Time's up!");
+                    timer.cancel();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 }

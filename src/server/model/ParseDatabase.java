@@ -18,16 +18,13 @@ public class ParseDatabase {
     }
 
     public void validateIfUser(String username, String password) throws IsNotUser{
-        Boolean isUser = false;
-        System.out.println(username+" "+password);
         ArrayList<Player> players = getUsers();
         for (Player player : players){
             if(player.getUsername().equals(username) && player.getPassword().equals(password)){
                 return;
             }
-            if(isUser = false)
-                throw new IsNotUser();
         }
+        throw new IsNotUser();
     }
 
     public ArrayList<Player> getUsers(){

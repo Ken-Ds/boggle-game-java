@@ -16,5 +16,6 @@ module Boggle{
         long submitWord(in string word, in string username);
         long getScore(in string username);
         string getRoundWinner(in string username);
+
     };
 };

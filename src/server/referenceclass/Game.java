@@ -2,33 +2,29 @@ package server.referenceclass;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game {
-    int gameID;
-    int round;
-    int waitingTime;
-    int roundTime;
-    ArrayList<Integer> roundScores = new ArrayList<>();
-    ArrayList<Player> players = new ArrayList<>();
-    ArrayList<Integer> gameScores = new ArrayList<>();
-    ArrayList<Character> letters = setLetters();
+    private int gameID;
+    private int round;
+    private static int waitingTime;
+    private static int roundTime;
+    private ArrayList<Integer> roundScores = new ArrayList<>();
+    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Integer> gameScores = new ArrayList<>();
+    private ArrayList<Character> letters;
+    private Boolean stat;
 
-    public Game(int gameID, int waitingTime, int roundTime, Player player) {
-        this.gameID = gameID;
+    public Game( Player player, int waitingTime, int roundTime) {
         round = 1;
         this.waitingTime = waitingTime;
         this.roundTime = roundTime;
         players.add(player);
         gameScores.add(0);
         roundScores.add(0);
-    }
-
-    public int getGameID() {
-        return gameID;
-    }
-
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
+        stat = false;
+        letters = setLetters();
     }
 
     public int getRound() {
@@ -99,5 +95,56 @@ public class Game {
             characters.add((char) (random.nextInt(26)+'A'));
         }
         return characters;
+    }
+
+    public Boolean getStat(){
+        return stat;
+    }
+
+    public void gameStart(){
+        stat = true;
+    }
+    public void gameEnd(){
+        stat = false;
+    }
+
+    public void startWaitTimer() {
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int countdown = waitingTime;
+            @Override
+            public void run() {
+                if (countdown > 0) {
+                    System.out.println("Time remaining: " + countdown + " seconds");
+                    countdown--;
+                    waitingTime = countdown;
+                } else {
+                    System.out.println("Game Started!");
+                    gameStart();
+                    timer.cancel();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
+    public void startRoundTimer() {
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int countdown = roundTime;
+            @Override
+            public void run() {
+                if (countdown > 0) {
+                    System.out.println("Time remaining: " + countdown + " seconds");
+                    countdown--;
+                    roundTime = countdown;
+                } else {
+                    System.out.println("Game Started!");
+                    gameStart();
+                    timer.cancel();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 }
