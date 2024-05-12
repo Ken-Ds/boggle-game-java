@@ -8,12 +8,12 @@ package server.view.serverPages.manageUsers;
  *
  * @author Dana
  */
-public class manageUsers extends javax.swing.JPanel {
+public class ManageUsers extends javax.swing.JPanel {
 
     /**
      * Creates new form manageUsers
      */
-    public manageUsers() {
+    public ManageUsers() {
         initComponents();
     }
 
