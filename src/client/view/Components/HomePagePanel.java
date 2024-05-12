@@ -1,4 +1,6 @@
 package client.view.Components;
+import client.view.Menu.WaitingMenu;
+
 import java.awt.Color;
 
 import java.awt.Dimension;
@@ -219,7 +221,11 @@ public class HomePagePanel extends JPanel {
     }// </editor-fold>
 
     private void labelStartMouseClicked(java.awt.event.MouseEvent evt) {
+        WaitingMenu waitingMenu = new WaitingMenu();
 
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        parentFrame.dispose();
+        waitingMenu.setVisible(true);
     }
 
     private void labelExitMouseClicked(java.awt.event.MouseEvent evt) {

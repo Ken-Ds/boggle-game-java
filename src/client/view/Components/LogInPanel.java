@@ -14,7 +14,7 @@ public class LogInPanel extends JPanel {
     private JButton buttonLogIn;
     private JLabel labelBackground;
     private JLabel labelPass;
-    private JLabel labelShrek;
+
     private JLabel labelUsername;
     private JTextField textPass;
     private JTextField textUsername;
@@ -32,7 +32,7 @@ public class LogInPanel extends JPanel {
         labelPass = new JLabel();
         textUsername = new JTextField();
         textPass = new JTextField();
-        labelShrek = new JLabel();
+
         labelBackground = new JLabel();
         buttonLogIn.addActionListener(new ActionListener() {
             @Override
