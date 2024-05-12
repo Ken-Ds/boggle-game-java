@@ -33,6 +33,26 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
     }
 
     @Override
+    public String[] getLeaderBoardsNames() {
+        ArrayList<Player> players = parseDatabase.getLeaderBoards();
+        String[] names = new String[players.size()];
+        for (int x = 0; x < players.size(); x++){
+            names[x] = players.get(x).getUsername();
+        }
+        return names;
+    }
+
+    @Override
+    public int[] getLeaderBoardsScores() {
+        ArrayList<Player> players = parseDatabase.getLeaderBoards();
+        int[] scores = new int[players.size()];
+        for (int x = 0; x < players.size(); x++){
+            scores[x] = players.get(x).getHighScore();
+        }
+        return scores;
+    }
+
+    @Override
     public void startGame(String username) {
         Player player = parseDatabase.getPlayerInfo(username);
         if(Server.waitingGameExist()) {

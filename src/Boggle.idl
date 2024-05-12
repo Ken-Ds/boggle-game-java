@@ -10,6 +10,8 @@ module Boggle{
 
         IntSeq getLeaderBoards();
         void logIn(in string username, in string password) raises (AlreadyLoggedIn, IsNotUser);
+        StringSeq getLeaderBoardsNames();
+        IntSeq getLeaderBoardsScores();
         void startGame(in string username);
         long getRoundTime(in string username);
         long getWaitingTime(in string username);

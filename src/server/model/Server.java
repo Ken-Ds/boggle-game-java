@@ -26,7 +26,7 @@ public class Server{
 
     public static Hashtable<String,ArrayList<String>> playerWords = new Hashtable<>();
 
-    ParseDatabase parseDatabase = new ParseDatabase();
+    public static ParseDatabase parseDatabase = new ParseDatabase();
 
     public void startServer(String args[]){
         orb = ORB.init(args,null);
@@ -134,7 +134,6 @@ public class Server{
                         games.get(gameId).gameEnd();
                         if (games.get(gameId).gameWinner() != null){
                             System.out.println(games.get(gameId).gameWinner()+ "won the game");
-
                         } else {
                             System.out.println("Game Not Started");
                         }
@@ -196,6 +195,6 @@ public class Server{
                 }
                 games.get(gameId).setPlayerScore(player,score);
             }
-        };
+        }
     }
 }

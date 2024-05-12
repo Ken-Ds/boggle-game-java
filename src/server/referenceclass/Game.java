@@ -1,5 +1,7 @@
 package server.referenceclass;
 
+import server.model.ParseDatabase;
+
 import java.util.*;
 
 public class Game {
@@ -200,6 +202,10 @@ public class Game {
         for (Player player: players){
             if(gameScores.get(player.getUsername()) == 3){
                 gameWinner = player;
+                int score = overAllScore.get(player.getUsername());
+                ParseDatabase parseDatabase = new ParseDatabase();
+                parseDatabase.setConnection();
+                parseDatabase.setHighScore(player.getId(),score);
                 return true;
             }
         }

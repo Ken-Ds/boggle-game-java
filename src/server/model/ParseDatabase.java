@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class ParseDatabase {
     private static Connection connection;
 
+
     public  void setConnection() {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/boggle?user=root&password");
@@ -63,15 +64,14 @@ public class ParseDatabase {
         return score;
     }
 
-    public ArrayList<Integer> getLeaderBoards(){
-        ArrayList<Integer> topFive = new ArrayList<>();
+    public ArrayList<Player> getLeaderBoards(){
+        ArrayList<Player> topFive = new ArrayList<>();
         try {
-            String query ="SELECT highscore FROM accounts ORDER BY highscore DESC LIMIT 5";
+            String query ="SELECT * FROM accounts ORDER BY highscore DESC LIMIT 5";
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()){
-                int score = resultSet.getInt(1);
-                topFive.add(score);
+                topFive.add(new Player(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4)));
             }
             resultSet.close();
             return topFive;
