@@ -19,10 +19,12 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
         parseDatabase.setConnection();
         parseDatabase.validateIfUser(username,password);
         for (Player player : Server.playersLoggedIn){
+            System.out.print(player.getUsername());
             if(username.equals(player.getUsername())){
                 throw new AlreadyLoggedIn("Account is Already LoggedIn");
             }
         }
+        Server.playersLoggedIn.add(parseDatabase.getPlayerInfo(username));
     }
 
     @Override

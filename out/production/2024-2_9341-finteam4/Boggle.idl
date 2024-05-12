@@ -8,7 +8,7 @@ module Boggle{
         typedef sequence <long> IntSeq;
 
         IntSeq getLeaderBoards();
-        void logIn(in string username, in string getPassword) raises (AlreadyLoggedIn, IsNotUser);
+        void logIn(in string username, in string password) raises (AlreadyLoggedIn, IsNotUser);
         void startGame(in string username);
         long getRoundTime(in string username);
         long getWaitingTime(in string username);

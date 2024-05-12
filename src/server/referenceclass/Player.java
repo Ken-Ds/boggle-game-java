@@ -1,10 +1,10 @@
 package server.referenceclass;
 
 public class Player {
-    int id;
-    String username;
-    String password;
-    int highScore;
+    private int id;
+    private String username;
+    private String password;
+    private int highScore;
 
     public Player(int id, String username){
         this.id = id;

@@ -8,8 +8,8 @@ import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 
 public class Connect {
+    public ClientInterface clientInterfaceImplementation;
     public void createConnection(String[] args){
-        ClientInterface clientInterfaceImplementation;
         try {
             ORB orb = ORB.init(args,null);
             org.omg.CORBA.Object objectRef = orb.resolve_initial_references("NameService");
@@ -23,4 +23,5 @@ public class Connect {
             System.out.println(e.getMessage());
         }
     }
+
 }

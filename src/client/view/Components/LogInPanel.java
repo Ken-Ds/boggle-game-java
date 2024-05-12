@@ -3,7 +3,6 @@ package client.view.Components;
 
 import client.view.Menu.HomePage;
 import client.view.Menu.LogIn;
-import client.view.logic.Authentication;
 
 import javax.swing.*;
 import java.awt.*;

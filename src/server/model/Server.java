@@ -46,7 +46,6 @@ public class Server{
             NameComponent path[] = ncRef.to_name(name);
 
             ncRef.rebind(path,cRef);
-            new ServerMain().setVisible(true);
             orb.run();
 
         } catch (Exception e) {
@@ -57,9 +56,5 @@ public class Server{
 
     public void startGame(String username){
 
-    }
-
-    public void logIn(String username){
-        playersLoggedIn.add(new ParseDatabase().getPlayerInfo(username));
     }
 }
