@@ -119,7 +119,9 @@ public class ServerMain extends JFrame {
         // Create and display the form
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ServerMain().setVisible(true);
+                ServerMain mainFrame = new ServerMain();
+                mainFrame.setVisible(true);
+                mainFrame.setLocationRelativeTo(null);
             }
         });
     }
