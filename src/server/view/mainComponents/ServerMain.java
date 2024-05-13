@@ -1,8 +1,10 @@
 package server.view.mainComponents;
 
+
 import server.view.serverPages.GameSettings;
 import server.view.serverPages.manageUsers.ManageUsers;
 import javax.swing.*;
+import java.awt.*;
 
 
 public class ServerMain extends JFrame {
@@ -10,8 +12,8 @@ public class ServerMain extends JFrame {
     private ManageUsers manageUsers;
     private JLabel sideProfileLabel;
     private JLabel mainMenuLabel;
-    private server.view.mainComponents.Header serverHeader;
-    private server.view.mainComponents.ServerMenu serverMenu;
+    private Header serverHeader;
+    private ServerMenu serverMenu;
     private JPanel serverMenuPanel;
     private JPanel shrekImagePanel;
     // End of variables declaration
@@ -39,12 +41,12 @@ public class ServerMain extends JFrame {
         setLocationByPlatform(true);
         setUndecorated(true);
 
-        serverMenuPanel.setBackground(new java.awt.Color(141, 167, 80));
+        serverMenuPanel.setBackground(new Color(141, 167, 80));
 
         serverMenu.setOpaque(true);
 
-        shrekImagePanel.setBackground(new java.awt.Color(153, 153, 0));
-        shrekImagePanel.setPreferredSize(new java.awt.Dimension(392, 320));
+        shrekImagePanel.setBackground(new Color(153, 153, 0));
+        shrekImagePanel.setPreferredSize(new Dimension(392, 320));
 
         sideProfileLabel.setIcon(new ImageIcon("src/server/view/icons/canal_ni_shrek.gif"));
         GroupLayout shrekImagePanelLayout = new GroupLayout(shrekImagePanel);
@@ -64,7 +66,7 @@ public class ServerMain extends JFrame {
                                 .addContainerGap())
         );
 
-        mainMenuLabel.setIcon(new ImageIcon("src/server/view/icons/shrek_is_love.gif")); // NOI18N
+        mainMenuLabel.setIcon(new ImageIcon("src/server/view/icons/moss1_1.gif"));
         GroupLayout serverMenuPanelLayout = new GroupLayout(serverMenuPanel);
         serverMenuPanel.setLayout(serverMenuPanelLayout);
         serverMenuPanelLayout.setHorizontalGroup(
@@ -93,7 +95,7 @@ public class ServerMain extends JFrame {
                                 .addContainerGap())
         );
 
-        getContentPane().add(serverMenuPanel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(serverMenuPanel, BorderLayout.CENTER);
 
         pack();
     }
@@ -115,7 +117,7 @@ public class ServerMain extends JFrame {
         }
 
         // Create and display the form
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ServerMain().setVisible(true);
             }
