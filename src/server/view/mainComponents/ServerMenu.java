@@ -1,6 +1,9 @@
 package server.view.mainComponents;
 
 
+import server.view.serverPages.GameSettings;
+import server.view.serverPages.manageUsers.ManageUsers;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +14,9 @@ public class ServerMenu extends JPanel {
     private JPanel gameSettingsButtonPanel;
     private JButton manageUsersButton;
     private JPanel manageUsersButtonPanel;
+    private ManageUsers manageUsersPanel;
+    private GameSettings gameSettingsPanel;
+
     // End of variables declaration
     /**
      * Creates new form ServerMenu
@@ -18,6 +24,8 @@ public class ServerMenu extends JPanel {
     public ServerMenu() {
         initComponents();
         this.setOpaque(false);
+        manageUsersPanel = new ManageUsers();
+        gameSettingsPanel = new GameSettings();
     }
 
 
@@ -101,10 +109,23 @@ public class ServerMenu extends JPanel {
     }
 
     private void gameSettingsButtonActionPerformed(ActionEvent evt) {
-
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(gameSettingsPanel, BorderLayout.CENTER);
+        frame.getContentPane().revalidate();
+        frame.getContentPane().repaint();
+        frame.pack();
+        frame.setVisible(true);
     }
 
     private void manageUsersButtonActionPerformed(ActionEvent evt) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(manageUsersPanel, BorderLayout.CENTER);
+        frame.getContentPane().revalidate();
+        frame.getContentPane().repaint();
+        frame.pack();
+        frame.setVisible(true);
 
     }
 }
