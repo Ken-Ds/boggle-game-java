@@ -8,6 +8,6 @@ public class MainClient {
 
     public static void main(String[] args) {
         connect.createConnection(args);
-        new LogIn().setVisible(true);
+        new LogIn(connect).setVisible(true);
     }
 }

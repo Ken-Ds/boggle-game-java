@@ -1,5 +1,6 @@
 package client.view.Menu;
 
+import client.model.Connect;
 import client.view.Components.LogInPanel;
 
 
@@ -8,15 +9,14 @@ import javax.swing.*;
 public class LogIn extends JFrame {
     private LogInPanel logInPanel;
 
-    public LogIn() {
-        initComponents();
+    public LogIn(Connect connect) {
+        initComponents(connect);
     }
 
 
+    private void initComponents(Connect connect) {
 
-    private void initComponents() {
-
-        logInPanel = new LogInPanel();
+        logInPanel = new LogInPanel(connect);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
@@ -36,7 +36,7 @@ public class LogIn extends JFrame {
     }
 
 
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
 
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -56,11 +56,11 @@ public class LogIn extends JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        *//* Create and display the form *//*
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LogIn().setVisible(true);
             }
         });
-    }
+    }*/
 }

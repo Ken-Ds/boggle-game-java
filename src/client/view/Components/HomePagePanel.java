@@ -1,4 +1,7 @@
 package client.view.Components;
+import client.model.Connect;
+import client.model.GameLogic;
+import client.model.User;
 import client.view.Menu.WaitingMenu;
 
 import java.awt.Color;
@@ -33,8 +36,8 @@ public class HomePagePanel extends JPanel {
     /**
      * Creates new form Title
      */
-    public HomePagePanel() {
-        initComponents();
+    public HomePagePanel(Connect connect, User user) {
+        initComponents(connect, user);
     }
 
     /**
@@ -44,7 +47,7 @@ public class HomePagePanel extends JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents() {
+    private void initComponents(Connect connect, User user) {
 
         panelStart = new RoundedPanel(50,new java.awt.Color(20,44,20));
         labelStart = new JLabel();
@@ -73,6 +76,7 @@ public class HomePagePanel extends JPanel {
         labelStart.setText("Start");
         labelStart.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GameLogic.start(user, connect);
                 labelStartMouseClicked(evt);
             }
         });
