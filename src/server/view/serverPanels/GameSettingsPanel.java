@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package server.view.serverPages;
+package server.view.serverPanels;
 
 /**
  *
  * @author Dana
  */
-public class GameSettings extends javax.swing.JPanel {
+public class GameSettingsPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form addUser
      */
-    public GameSettings() {
+    public GameSettingsPanel() {
         initComponents();
     }
 
