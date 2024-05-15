@@ -2,19 +2,12 @@ package client.view.Components;
 import client.MainClient;
 import client.model.Connect;
 import client.model.User;
-import client.view.Menu.HomePage;
-import client.view.Menu.InGameMenu;
-import client.view.Menu.LogIn;
-import client.view.Menu.WaitingMenu;
+import client.view.Menu.*;
 
-import java.awt.Color;
+import java.awt.*;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
-import java.awt.RenderingHints;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -130,36 +123,33 @@ public class HomePagePanel extends JPanel {
         scrollLeaderboard.setOpaque(false);
 
         panelScrollLeaderB.setBackground(new java.awt.Color(45, 81, 40));
+        panelScrollLeaderB.setLayout(new BoxLayout(panelScrollLeaderB, BoxLayout.Y_AXIS));
 
-        labelScore.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelScore.setForeground(new java.awt.Color(255, 255, 255));
-        labelScore.setHorizontalAlignment(SwingConstants.CENTER);
-        labelScore.setText("-9");
+        String[] highNames = MainClient.connect.clientInterfaceImplementation.getLeaderBoardsNames();
+        int[] highScores = MainClient.connect.clientInterfaceImplementation.getLeaderBoardsScores();
 
-        labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
-        labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
-        labelPlayer.setText("Kendick");
+        for (int x = 0; x < highNames.length; x++) {
+            JPanel playerPanel = new JPanel();
+            GridLayout gridLayout = new GridLayout(1,2);
+            playerPanel.setBackground(new java.awt.Color(45, 81, 40));
+            playerPanel.setLayout(new GridLayout(1, 2));
 
-        GroupLayout panelScrollLeaderBLayout = new GroupLayout(panelScrollLeaderB);
-        panelScrollLeaderB.setLayout(panelScrollLeaderBLayout);
-        panelScrollLeaderBLayout.setHorizontalGroup(
-                panelScrollLeaderBLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelScrollLeaderBLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelPlayer, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelScore, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelScrollLeaderBLayout.setVerticalGroup(
-                panelScrollLeaderBLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelScrollLeaderBLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(panelScrollLeaderBLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelPlayer, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelScore, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(506, Short.MAX_VALUE))
-        );
+            JLabel labelPlayer = new JLabel();
+            labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
+            labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
+            labelPlayer.setText(highNames[x]);
+
+            JLabel labelScore = new JLabel();
+            labelScore.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+            labelScore.setForeground(new java.awt.Color(255, 255, 255));
+            labelScore.setHorizontalAlignment(SwingConstants.CENTER);
+            labelScore.setText(String.valueOf(highScores[x]));
+
+            playerPanel.add(labelPlayer);
+            playerPanel.add(labelScore);
+
+            panelScrollLeaderB.add(playerPanel);
+        }
 
         scrollLeaderboard.setViewportView(panelScrollLeaderB);
 
@@ -189,6 +179,8 @@ public class HomePagePanel extends JPanel {
 
         add(panelLeaderBoard);
         panelLeaderBoard.setBounds(920, 20, 220, 50);
+
+
 
         URL icon1ImageURL = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/s13.png");
         if (icon1ImageURL != null) {
@@ -233,7 +225,7 @@ public class HomePagePanel extends JPanel {
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         parentFrame.dispose();
         waitingMenu.setVisible(true);
-        java.util.Timer timer = new Timer();
+        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             int remainingTime = MainClient.connect.clientInterfaceImplementation.getWaitingTime(MainClient.username)+1;
 
@@ -245,12 +237,7 @@ public class HomePagePanel extends JPanel {
                 } else {
                     if(MainClient.connect.clientInterfaceImplementation.gameStatus(MainClient.username)){
                         waitingMenu.dispose();
-                        JFrame jFrame = new JFrame();
-                        InGameMenu inGameMenu = new InGameMenu();
-                        jFrame.add(inGameMenu);
-                        jFrame.pack();
-                        jFrame.setLocationRelativeTo(null);
-                        jFrame.setVisible(true);
+                        startGame();
                     }else{
                         waitingMenu.dispose();
                         HomePage homePage = new HomePage();
@@ -266,7 +253,10 @@ public class HomePagePanel extends JPanel {
     }
 
     private void labelExitMouseClicked(java.awt.event.MouseEvent evt) {
-        System.exit(0);
+        MainClient.connect.clientInterfaceImplementation.logOut(MainClient.username);
+        HomePage homePage = (HomePage) SwingUtilities.getWindowAncestor(HomePagePanel.this);
+        homePage.dispose();
+        new LogIn().setVisible(true);
     }
     class RoundedPanel extends JPanel
     {
@@ -310,5 +300,59 @@ public class HomePagePanel extends JPanel {
 //            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
 //
         }
+    }
+
+    public void startGame(){
+        InGame inGame = new InGame();
+        inGame.setVisible(true);
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int remainingTime = MainClient.connect.clientInterfaceImplementation.getRoundTime(MainClient.username)+1;
+
+            @Override
+            public void run() {
+                if (remainingTime > 0) {
+                    SwingUtilities.invokeLater(() -> inGame.inGamePanel.setLabelTimer(""+remainingTime));
+                    remainingTime--;
+                } else {
+                    inGame.dispose();
+                    afterR();
+                    timer.cancel();
+                }
+            }
+        };
+
+        // Schedule the task to run every second (1000 milliseconds)
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+    public void afterR(){
+        AfterRound afterRound = new AfterRound();
+        afterRound.setVisible(true);
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int remainingTime = MainClient.connect.clientInterfaceImplementation.getWaitingTime(MainClient.username)+1;
+
+            @Override
+            public void run() {
+                if (remainingTime > 0) {
+                    SwingUtilities.invokeLater(() -> afterRound.afterRoundPanel.setLabelTimer(""+remainingTime));
+                    remainingTime--;
+                } else {
+                    afterRound.dispose();
+                    win();
+                    timer.cancel();
+                }
+
+            }
+        };
+        timer.scheduleAtFixedRate(task,0,1000);
+    }
+
+    public void win(){
+        Winner winner = new Winner();
+        winner.setVisible(true);
     }
 }

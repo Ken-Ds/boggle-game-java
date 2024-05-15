@@ -23,5 +23,6 @@ module Boggle{
         IntSeq getOverAllScores(in string username);
         string getRoundWinner(in string username);
         boolean gameStatus(in string username);
+        void logOut (in string username);
         };
         };

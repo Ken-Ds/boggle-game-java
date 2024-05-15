@@ -5,6 +5,8 @@
 package server.view.serverPanels;
 
 
+import server.model.Server;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -65,10 +67,10 @@ public class GameSettingsPanel extends JPanel {
         waitingTimeLabel.setText("WAITING TIME:");
 
         gameTimeInput.setFont(new Font("Ebrima", 2, 14)); // NOI18N
-        gameTimeInput.setText("Type here...");
+        gameTimeInput.setText(String.valueOf(Server.roundTime));
 
         waitingTimeInput.setFont(new Font("Ebrima", 2, 14)); // NOI18N
-        waitingTimeInput.setText("Type here...");
+        waitingTimeInput.setText(String.valueOf(Server.waitingTime));
         waitingTimeInput.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 waitingTimeInputActionPerformed(evt);
@@ -140,7 +142,8 @@ public class GameSettingsPanel extends JPanel {
     }//GEN-LAST:event_waitingTimeInputActionPerformed
 
     private void saveButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        Server.waitingTime = Integer.parseInt(waitingTimeInput.getText());
+        Server.roundTime = Integer.parseInt(gameTimeInput.getText());
     }//GEN-LAST:event_saveButtonActionPerformed
 
 

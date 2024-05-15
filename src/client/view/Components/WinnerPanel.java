@@ -1,5 +1,8 @@
 package client.view.Components;
 
+import client.view.Menu.HomePage;
+import client.view.Menu.Winner;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -73,6 +76,12 @@ public class WinnerPanel extends JPanel {
         labelReturn.setForeground(new java.awt.Color(255, 255, 255));
         labelReturn.setHorizontalAlignment(SwingConstants.CENTER);
         labelReturn.setText("RETURN");
+
+        labelReturn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+
+            }
+        });
 
         GroupLayout panelReturnLayout = new GroupLayout(panelReturn);
         panelReturn.setLayout(panelReturnLayout);
@@ -270,5 +279,11 @@ public class WinnerPanel extends JPanel {
 //            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
 //
         }
+    }
+
+    private void labelReturnMouseClicked(java.awt.event.MouseEvent evt){
+        Winner winner = (Winner) SwingUtilities.getWindowAncestor(WinnerPanel.this);
+        winner.dispose();
+        new HomePage().setVisible(true);
     }
 }

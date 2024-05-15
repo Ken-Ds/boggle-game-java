@@ -1,5 +1,8 @@
 package server.view.serverPanels.manageUsers;
 
+import server.model.ParseDatabase;
+import server.model.SetJTable;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -98,25 +101,7 @@ public class DeleteUserFrame extends JFrame {
 
         jTable1.setBackground(new Color(228, 235, 156));
         jTable1.setFont(new Font("Century Gothic", 1, 12)); // NOI18N
-        jTable1.setModel(new DefaultTableModel(
-                new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String [] {
-                        "ID", "Username", "Password", "High Score"
-                }
-        ) {
-            Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        jTable1.setModel(new SetJTable().setUsersTable());
         jScrollPane1.setViewportView(jTable1);
 
         GroupLayout usersPanelLayout = new GroupLayout(usersPanel);
@@ -153,6 +138,7 @@ public class DeleteUserFrame extends JFrame {
         cancelButton.setText("CANCEL");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+                dispose();
             }
         });
 
@@ -206,7 +192,13 @@ public class DeleteUserFrame extends JFrame {
     }
 
     private void deleteButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if(selectedRow >= 0 ){
+            DefaultTableModel model =(DefaultTableModel) jTable1.getModel();
+            int id =(Integer) model.getValueAt(selectedRow,1);
+            new ParseDatabase().deleteUser(id);
+            dispose();
+        }
     }
 
     private void cancelButtonActionPerformed(ActionEvent evt) {

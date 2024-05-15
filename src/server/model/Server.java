@@ -17,8 +17,8 @@ import java.util.*;
 public class Server{
     private ORB orb;
     private List<Player> currentGame;
-    private static int waitingTime;
-    private static int roundTime;
+    public static int waitingTime = 10;
+    public static int roundTime = 15;
     private static int gameId = 0;
     public static ArrayList<Player> playersLoggedIn = new ArrayList<>();
 

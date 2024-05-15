@@ -1,5 +1,9 @@
 package server.view.serverPanels.manageUsers;
 
+import server.MainServer;
+import server.model.ParseDatabase;
+import server.model.SetJTable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +17,7 @@ public class AddUserFrame extends JFrame {
     private JPanel innerPanel;
     private JLabel jLabel2;
     private JPanel jPanel1;
-    private JPasswordField jPasswordField1;
+    private JTextField jPasswordField1;
     private JSeparator jSeparator1;
     private JLabel passwordLabel;
     private JTextField usernameInput;
@@ -35,7 +39,7 @@ public class AddUserFrame extends JFrame {
         usernameLabel = new JLabel();
         passwordLabel = new JLabel();
         usernameInput = new JTextField();
-        jPasswordField1 = new JPasswordField();
+        jPasswordField1 = new JTextField();
         jSeparator1 = new JSeparator();
         addButton = new JButton();
         cancelButton = new JButton();
@@ -81,14 +85,11 @@ public class AddUserFrame extends JFrame {
         passwordLabel.setText("Password:");
 
         usernameInput.setFont(new Font("Ebrima", 2, 14)); // NOI18N
-        usernameInput.setText("Type here...");
         usernameInput.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 usernameInputActionPerformed(evt);
             }
         });
-
-        jPasswordField1.setText("jPasswordField1");
 
         jSeparator1.setBackground(new Color(255, 255, 0));
         jSeparator1.setForeground(new Color(255, 255, 0));
@@ -179,6 +180,7 @@ public class AddUserFrame extends JFrame {
         cancelButton.setText("CANCEL");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+                dispose();
             }
         });
 
@@ -225,8 +227,9 @@ public class AddUserFrame extends JFrame {
     }
 
     private void addButtonActionPerformed(ActionEvent evt) {
+        ParseDatabase parseDatabase = new ParseDatabase();
         String username = usernameInput.getText();
-        String password = new String(jPasswordField1.getPassword());
+        String password = new String(jPasswordField1.getText());
 
         if (!username.isEmpty() && !password.isEmpty()) {
             // Here, you would typically add the user to your system
@@ -236,6 +239,16 @@ public class AddUserFrame extends JFrame {
             // You may want to clear the input fields after adding the user
             usernameInput.setText("");
             jPasswordField1.setText("");
+            parseDatabase.setConnection();
+            parseDatabase.addUser(username,password);
+            dispose();
+
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    MainServer.serverMain.manageUsersPanel.setJTable1(new SetJTable().setUsersTable());
+                }
+            });
         } else {
             JOptionPane.showMessageDialog(this, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
         }

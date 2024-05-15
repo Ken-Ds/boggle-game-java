@@ -1053,4 +1053,8 @@ public class InGamePanel extends JPanel {
             label.setEnabled(enabled);
         }
     }
+
+    public void setLabelTimer(String time){
+        labelTimer.setText(time);
+    }
 }

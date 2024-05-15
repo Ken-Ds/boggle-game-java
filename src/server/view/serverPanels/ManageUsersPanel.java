@@ -1,5 +1,8 @@
 package server.view.serverPanels;
 
+import server.MainServer;
+import server.model.ParseDatabase;
+import server.model.SetJTable;
 import server.view.serverPanels.manageUsers.AddUserFrame;
 import server.view.serverPanels.manageUsers.DeleteUserFrame;
 import server.view.serverPanels.manageUsers.EditUserFrame;
@@ -50,7 +53,6 @@ public class ManageUsersPanel extends JPanel {
         jLabel2.setText("SEARCH:");
 
         jTextField1.setFont(new Font("Candara Light", 2, 12));
-        jTextField1.setText("Search here...");
         jTextField1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -98,25 +100,7 @@ public class ManageUsersPanel extends JPanel {
 
         jTable1.setBackground(new Color(228, 235, 156));
         jTable1.setFont(new Font("Century Gothic", 1, 12));
-        jTable1.setModel(new DefaultTableModel(
-                new Object[][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[] {
-                        "ID", "Username", "Password", "High Score"
-                }
-        ) {
-            Class[] types = new Class[] {
-                    Integer.class, String.class, String.class, Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-        });
+        jTable1.setModel(new SetJTable().setUsersTable());
         jScrollPane1.setViewportView(jTable1);
 
         GroupLayout usersPanelLayout = new GroupLayout(usersPanel);
@@ -211,17 +195,46 @@ public class ManageUsersPanel extends JPanel {
     }
 
     private void deleteButtonActionPerformed(ActionEvent evt) {
-        // Open DeleteUserFrame when Delete button is clicked
-        DeleteUserFrame deleteUserFrame = new DeleteUserFrame();
-        deleteUserFrame.setVisible(true);
-        deleteUserFrame.setLocationRelativeTo(this);
+        ParseDatabase parseDatabase = new ParseDatabase();
+        parseDatabase.setConnection();
+        int selectedRow = jTable1.getSelectedRow();
+        if(selectedRow >= 0 ){
+            DefaultTableModel model =(DefaultTableModel) jTable1.getModel();
+            String id =(String) model.getValueAt(selectedRow,0);
+            parseDatabase.deleteUser(Integer.parseInt(id));
+        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainServer.serverMain.manageUsersPanel.setJTable1(new SetJTable().setUsersTable());
+            }
+        });
     }
 
     private void jButton2ActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        if(!jTextField1.getText().equals("")) {
+            jTable1.setModel(new SetJTable().searchTable(jTextField1.getText()));
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    MainServer.serverMain.manageUsersPanel.setJTable1(new SetJTable().searchTable(jTextField1.getText()));
+                }
+            });
+        } else {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    MainServer.serverMain.manageUsersPanel.setJTable1(new SetJTable().setUsersTable());
+                }
+            });
+        }
     }
 
     private void jTextField1ActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
+    }
+
+    public void setJTable1(DefaultTableModel defaultTableModel){
+        jTable1.setModel(defaultTableModel);
     }
 }

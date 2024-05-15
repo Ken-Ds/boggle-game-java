@@ -3,11 +3,9 @@ package server.model;
 import Boggle.AlreadyLoggedIn;
 import Boggle.ClientInterfacePOA;
 import Boggle.IsNotUser;
-import server.referenceclass.Game;
 import server.referenceclass.Player;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
@@ -60,8 +58,6 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
             System.out.println(player.getUsername() + " has joined Game " + Server.checkPlayerGame(player));
         }
         else {
-            Server.setWaitingTime(10);
-            Server.setRoundTime(10);
             Server.playGame(player);
             System.out.println(player.getUsername() + " has started Game " + Server.checkPlayerGame(player));
         }
@@ -181,5 +177,14 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
         Player player = parseDatabase.getPlayerInfo(username);
         int game = Server.checkPlayerGame(player);
         return Server.games.get(game).getStat();
+    }
+
+    @Override
+    public void logOut(String username) {
+        for (int x = 0; x < Server.playersLoggedIn.size(); x++){
+            if (username.equals(Server.playersLoggedIn.get(x).getUsername())){
+                Server.playersLoggedIn.remove(x);
+            }
+        }
     }
 }

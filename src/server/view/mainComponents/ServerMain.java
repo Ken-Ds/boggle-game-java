@@ -13,7 +13,7 @@ public class ServerMain extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
 
-    private ManageUsersPanel manageUsersPanel;
+    public ManageUsersPanel manageUsersPanel;
     private GameSettingsPanel gameSettingsPanel;
 
     public ServerMain() {

@@ -330,4 +330,8 @@ public class AfterRoundPanel extends JPanel {
 //
         }
     }
+
+    public void setLabelTimer(String time){
+        labelTimer.setText(time);
+    }
 }
