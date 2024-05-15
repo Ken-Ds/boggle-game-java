@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package server.view.serverPanels.manageUsers;
-
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,10 +6,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DeleteUserPanel extends JPanel {
+public class EditUserFrame extends JFrame {
     private JButton cancelButton;
-    private JButton deleteButton;
-    private JPanel deleteUserMainPanel;
+    private JComboBox<String> editComboBox;
+    private JLabel editLabel;
+    private JPanel editUserMainPanel;
     private JButton jButton2;
     private JLabel jLabel2;
     private JPanel jPanel2;
@@ -22,13 +18,14 @@ public class DeleteUserPanel extends JPanel {
     private JTable jTable1;
     private JTextField jTextField1;
     private JPanel usersPanel;
-    public DeleteUserPanel() {
+
+    public EditUserFrame() {
         initComponents();
     }
 
     private void initComponents() {
 
-        deleteUserMainPanel = new JPanel();
+        editUserMainPanel = new JPanel();
         usersPanel = new JPanel();
         jPanel2 = new JPanel();
         jLabel2 = new JLabel();
@@ -36,10 +33,13 @@ public class DeleteUserPanel extends JPanel {
         jButton2 = new JButton();
         jScrollPane1 = new JScrollPane();
         jTable1 = new JTable();
-        deleteButton = new JButton();
         cancelButton = new JButton();
+        editComboBox = new JComboBox<>();
+        editLabel = new JLabel();
 
-        deleteUserMainPanel.setBackground(new Color(83, 123, 47));
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        editUserMainPanel.setBackground(new Color(83, 123, 47));
 
         usersPanel.setBackground(new Color(228, 235, 156));
 
@@ -125,28 +125,16 @@ public class DeleteUserPanel extends JPanel {
         usersPanelLayout.setHorizontalGroup(
                 usersPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(usersPanelLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 1050, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 1047, GroupLayout.PREFERRED_SIZE)
         );
         usersPanelLayout.setVerticalGroup(
                 usersPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(usersPanelLayout.createSequentialGroup()
                                 .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 714, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 733, GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        deleteButton.setBackground(new Color(45, 81, 40));
-        deleteButton.setFont(new Font("Comic Sans MS", 1, 14)); // NOI18N
-        deleteButton.setForeground(new Color(255, 255, 102));
-        deleteButton.setText("DELETE");
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                deleteButtonActionPerformed(evt);
-            }
-        });
 
         cancelButton.setBackground(new Color(45, 81, 40));
         cancelButton.setFont(new Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -154,47 +142,65 @@ public class DeleteUserPanel extends JPanel {
         cancelButton.setText("CANCEL");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
             }
         });
 
-        GroupLayout deleteUserMainPanelLayout = new GroupLayout(deleteUserMainPanel);
-        deleteUserMainPanel.setLayout(deleteUserMainPanelLayout);
-        deleteUserMainPanelLayout.setHorizontalGroup(
-                deleteUserMainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(deleteUserMainPanelLayout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addComponent(usersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(62, Short.MAX_VALUE))
-                        .addGroup(deleteUserMainPanelLayout.createSequentialGroup()
-                                .addGap(144, 144, 144)
-                                .addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
+        editComboBox.setBackground(new Color(45, 81, 40));
+        editComboBox.setFont(new Font("Comic Sans MS", 1, 14)); // NOI18N
+        editComboBox.setForeground(new Color(255, 255, 102));
+        editComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "USERNAME", "PASSWORD" }));
+        editComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                editComboBoxActionPerformed(evt);
+            }
+        });
+
+        editLabel.setFont(new Font("Century Gothic", 1, 18)); // NOI18N
+        editLabel.setForeground(new Color(255, 255, 255));
+        editLabel.setText("EDIT:");
+
+        GroupLayout editUserMainPanelLayout = new GroupLayout(editUserMainPanel);
+        editUserMainPanel.setLayout(editUserMainPanelLayout);
+        editUserMainPanelLayout.setHorizontalGroup(
+                editUserMainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(editUserMainPanelLayout.createSequentialGroup()
+                                .addGap(151, 151, 151)
+                                .addComponent(editLabel)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(editComboBox, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
-                                .addGap(144, 144, 144))
-        );
-        deleteUserMainPanelLayout.setVerticalGroup(
-                deleteUserMainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(deleteUserMainPanelLayout.createSequentialGroup()
-                                .addGap(33, 33, 33)
+                                .addGap(201, 201, 201))
+                        .addGroup(editUserMainPanelLayout.createSequentialGroup()
+                                .addGap(63, 63, 63)
                                 .addComponent(usersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(63, Short.MAX_VALUE))
+        );
+        editUserMainPanelLayout.setVerticalGroup(
+                editUserMainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(editUserMainPanelLayout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(usersPanel, GroupLayout.PREFERRED_SIZE, 766, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(deleteUserMainPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(editUserMainPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(editComboBox)
+                                        .addComponent(editLabel))
                                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(deleteUserMainPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editUserMainPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(deleteUserMainPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editUserMainPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        pack();
     }
 
     private void jTextField1ActionPerformed(ActionEvent evt) {
@@ -205,16 +211,11 @@ public class DeleteUserPanel extends JPanel {
         // TODO add your handling code here:
     }
 
-    private void deleteButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
     private void cancelButtonActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-
-
-
-
+    private void editComboBoxActionPerformed(ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 }

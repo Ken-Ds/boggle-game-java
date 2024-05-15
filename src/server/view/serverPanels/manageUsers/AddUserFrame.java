@@ -1,16 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package server.view.serverPanels.manageUsers;
-
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddUserPanel extends JPanel {
+public class AddUserFrame extends JFrame {
     private JButton addButton;
     private JPanel addUserMainPanel;
     private JButton cancelButton;
@@ -25,7 +20,7 @@ public class AddUserPanel extends JPanel {
     private JLabel usernameLabel;
     private JPanel usersPanel;
 
-    public AddUserPanel() {
+    public AddUserFrame() {
         initComponents();
     }
 
@@ -44,6 +39,9 @@ public class AddUserPanel extends JPanel {
         jSeparator1 = new JSeparator();
         addButton = new JButton();
         cancelButton = new JButton();
+
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         addUserMainPanel.setBackground(new Color(83, 123, 47));
 
@@ -181,7 +179,6 @@ public class AddUserPanel extends JPanel {
         cancelButton.setText("CANCEL");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -212,8 +209,8 @@ public class AddUserPanel extends JPanel {
                                 .addGap(70, 70, 70))
         );
 
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(addUserMainPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -222,20 +219,34 @@ public class AddUserPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(addUserMainPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        pack();
+        setLocationRelativeTo(null);
     }
 
     private void addButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        String username = usernameInput.getText();
+        String password = new String(jPasswordField1.getPassword());
+
+        if (!username.isEmpty() && !password.isEmpty()) {
+            // Here, you would typically add the user to your system
+            // For demonstration purposes, let's just print the entered username and password
+            System.out.println("Username: " + username);
+            System.out.println("Password: " + password);
+            // You may want to clear the input fields after adding the user
+            usernameInput.setText("");
+            jPasswordField1.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void cancelButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        // Close the frame or perform other actions on cancel
+        dispose();
     }
 
     private void usernameInputActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        // Additional action on username input if needed
     }
-
-
-
 }
