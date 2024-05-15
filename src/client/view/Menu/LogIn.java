@@ -9,14 +9,14 @@ import javax.swing.*;
 public class LogIn extends JFrame {
     private LogInPanel logInPanel;
 
-    public LogIn(Connect connect) {
-        initComponents(connect);
+    public LogIn() {
+        initComponents();
     }
 
 
-    private void initComponents(Connect connect) {
+    private void initComponents() {
 
-        logInPanel = new LogInPanel(connect);
+        logInPanel = new LogInPanel();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 

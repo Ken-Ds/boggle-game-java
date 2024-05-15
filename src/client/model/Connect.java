@@ -8,7 +8,7 @@ import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 
 public class Connect {
-    public ClientInterface clientInterfaceImplementation;
+    public  ClientInterface clientInterfaceImplementation;
     public void createConnection(String[] args){
         try {
             ORB orb = ORB.init(args,null);

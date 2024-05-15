@@ -68,7 +68,7 @@ public class Server{
 
     public static void joinGame(Player player){
         for (int x = 0; x <= games.size()-1; x++){
-            if (games.get(x).getStat() == false){
+            if (!games.get(x).getStat()){
                 games.get(x).addPlayer(player);
             }
         }
@@ -113,6 +113,7 @@ public class Server{
     }
 
     public static void startWaitTimer(int gameId) {
+        System.out.println(games);
         int temp = games.get(gameId).getWaitingTime();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -178,6 +179,7 @@ public class Server{
                     countdown--;
                 } else {
                     games.remove(gameId);
+                    timer.cancel();
                 }
             }
         };

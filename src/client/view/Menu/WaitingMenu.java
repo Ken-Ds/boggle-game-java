@@ -1,12 +1,17 @@
 package client.view.Menu;
 
+import client.MainClient;
 import client.view.Components.WaitingPlayerPanel;
 
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WaitingMenu extends JFrame {
-    private WaitingPlayerPanel waitingPlayerPanel1;
+    public WaitingPlayerPanel waitingPlayerPanel1;
 
     /**
      * Creates new form WaitingMenu

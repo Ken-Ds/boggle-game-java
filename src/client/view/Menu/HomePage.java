@@ -9,8 +9,8 @@ import javax.swing.*;
 
 public class HomePage extends JFrame {
     private HomePagePanel homePagePanel;
-    public HomePage(Connect connect, User user) {
-        initComponents(connect, user);
+    public HomePage() {
+        initComponents();
 
     }
 
@@ -21,9 +21,9 @@ public class HomePage extends JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents(Connect connect, User user) {
+    private void initComponents() {
 
-        homePagePanel = new HomePagePanel(connect, user);
+        homePagePanel = new HomePagePanel();
 
         setDefaultCloseOperation(
                 WindowConstants.EXIT_ON_CLOSE);

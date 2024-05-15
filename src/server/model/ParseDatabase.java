@@ -153,7 +153,7 @@ public class ParseDatabase {
                 PreparedStatement preparedStatement2 = connection.prepareStatement(query);
                 preparedStatement2.setInt(1,highScore);
                 preparedStatement2.setInt(2,id);
-                preparedStatement2.execute();
+                preparedStatement2.execute(query2);
             }
             System.out.println("HighScore Changed");
         }catch (Exception e){

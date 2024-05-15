@@ -3,8 +3,8 @@ package client.view.Components;
 
 import Boggle.AlreadyLoggedIn;
 import Boggle.IsNotUser;
+import client.MainClient;
 import client.model.Connect;
-import client.model.GameLogic;
 import client.model.User;
 import client.view.Menu.HomePage;
 import client.view.Menu.LogIn;
@@ -25,14 +25,12 @@ public class LogInPanel extends JPanel {
     private JTextField textUsername;
     private HomePage homePage;
 
-    private static User user;
-
-    public LogInPanel(Connect connect) {
-        initComponents(connect);
-        this.homePage = new HomePage(connect, user);
+    public LogInPanel() {
+        initComponents();
+        this.homePage = new HomePage();
     }
 
-    private void initComponents(Connect connect) {
+    private void initComponents() {
 
         buttonLogIn = new JButton();
         labelUsername = new JLabel();
@@ -44,16 +42,15 @@ public class LogInPanel extends JPanel {
         buttonLogIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = textUsername.getText();
+                MainClient.username = textUsername.getText();
                 String password = textPass.getText();
                 try {
-                    GameLogic.login(username, password, connect);
+                    MainClient.connect.clientInterfaceImplementation.logIn(MainClient.username, password);
                 }
                 catch (IsNotUser | AlreadyLoggedIn e2){
                     System.out.println("Already Logged In or Is Not A User");
                     return;
                 }
-                user.setUsername(username);
                 homePage.setVisible(true);
                 LogIn logInFrame = (LogIn) SwingUtilities.getWindowAncestor(LogInPanel.this);
                 logInFrame.dispose();

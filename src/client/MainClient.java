@@ -4,10 +4,12 @@ import client.model.Connect;
 import client.view.Menu.LogIn;
 
 public class MainClient {
-    static Connect connect = new Connect();
+    public static Connect connect = new Connect();
+    public static String username = null;
 
     public static void main(String[] args) {
         connect.createConnection(args);
-        new LogIn(connect).setVisible(true);
+        new LogIn().setVisible(true);
     }
+
 }

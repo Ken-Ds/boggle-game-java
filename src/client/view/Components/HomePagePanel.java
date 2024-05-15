@@ -1,7 +1,10 @@
 package client.view.Components;
+import client.MainClient;
 import client.model.Connect;
-import client.model.GameLogic;
 import client.model.User;
+import client.view.Menu.HomePage;
+import client.view.Menu.InGameMenu;
+import client.view.Menu.LogIn;
 import client.view.Menu.WaitingMenu;
 
 import java.awt.Color;
@@ -12,6 +15,8 @@ import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 import javax.swing.*;
@@ -31,13 +36,11 @@ public class HomePagePanel extends JPanel {
     private JPanel panelScrollLeaderB;
     private JPanel panelStart;
     private JScrollPane scrollLeaderboard;
-
-
     /**
      * Creates new form Title
      */
-    public HomePagePanel(Connect connect, User user) {
-        initComponents(connect, user);
+    public HomePagePanel() {
+        initComponents();
     }
 
     /**
@@ -47,7 +50,7 @@ public class HomePagePanel extends JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents(Connect connect, User user) {
+    private void initComponents() {
 
         panelStart = new RoundedPanel(50,new java.awt.Color(20,44,20));
         labelStart = new JLabel();
@@ -76,7 +79,6 @@ public class HomePagePanel extends JPanel {
         labelStart.setText("Start");
         labelStart.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                GameLogic.start(user, connect);
                 labelStartMouseClicked(evt);
             }
         });
@@ -225,11 +227,42 @@ public class HomePagePanel extends JPanel {
     }// </editor-fold>
 
     private void labelStartMouseClicked(java.awt.event.MouseEvent evt) {
+        MainClient.connect.clientInterfaceImplementation.startGame(MainClient.username);
         WaitingMenu waitingMenu = new WaitingMenu();
 
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         parentFrame.dispose();
         waitingMenu.setVisible(true);
+        java.util.Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int remainingTime = MainClient.connect.clientInterfaceImplementation.getWaitingTime(MainClient.username)+1;
+
+            @Override
+            public void run() {
+                if (remainingTime > 0) {
+                    SwingUtilities.invokeLater(() -> waitingMenu.waitingPlayerPanel1.setLabelWaitingTimer(""+remainingTime));
+                    remainingTime--;
+                } else {
+                    if(MainClient.connect.clientInterfaceImplementation.gameStatus(MainClient.username)){
+                        waitingMenu.dispose();
+                        JFrame jFrame = new JFrame();
+                        InGameMenu inGameMenu = new InGameMenu();
+                        jFrame.add(inGameMenu);
+                        jFrame.pack();
+                        jFrame.setLocationRelativeTo(null);
+                        jFrame.setVisible(true);
+                    }else{
+                        waitingMenu.dispose();
+                        HomePage homePage = new HomePage();
+                        homePage.setVisible(true);
+                    }
+                    timer.cancel();
+                }
+            }
+        };
+
+        // Schedule the task to run every second (1000 milliseconds)
+        timer.scheduleAtFixedRate(task, 0, 1000);
     }
 
     private void labelExitMouseClicked(java.awt.event.MouseEvent evt) {

@@ -1,5 +1,7 @@
 package client.view.Components;
 
+import client.MainClient;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,6 +25,7 @@ public class WaitingPlayerPanel extends JPanel {
     private JPanel panelWaitPlayer;
     private JPanel panelWaitingTimer;
     private JScrollPane scrollPlayers;
+
 
     public WaitingPlayerPanel() {
         initComponents();
@@ -76,6 +79,7 @@ public class WaitingPlayerPanel extends JPanel {
         labelWaitingTimer.setForeground(new java.awt.Color(255, 255, 255));
         labelWaitingTimer.setHorizontalAlignment(SwingConstants.CENTER);
         labelWaitingTimer.setText("0:10");
+
 
         GroupLayout panelWaitingTimerLayout = new GroupLayout(panelWaitingTimer);
         panelWaitingTimer.setLayout(panelWaitingTimerLayout);
@@ -208,5 +212,11 @@ public class WaitingPlayerPanel extends JPanel {
 //            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
 //
         }
+
+
+    }
+
+    public void setLabelWaitingTimer(String time){
+        labelWaitingTimer.setText(time);
     }
 }
