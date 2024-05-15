@@ -103,7 +103,7 @@ public class HomePagePanel extends JPanel {
         labelExit.setFont(new java.awt.Font("Bell MT", 1, 37)); // NOI18N
         labelExit.setForeground(new java.awt.Color(255, 255, 255));
         labelExit.setHorizontalAlignment(SwingConstants.CENTER);
-        labelExit.setText("Exit");
+        labelExit.setText("Logout");
         labelExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelExitMouseClicked(evt);

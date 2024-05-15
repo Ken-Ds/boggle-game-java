@@ -47,8 +47,15 @@ public class LogInPanel extends JPanel {
                 try {
                     MainClient.connect.clientInterfaceImplementation.logIn(MainClient.username, password);
                 }
-                catch (IsNotUser | AlreadyLoggedIn e2){
-                    System.out.println("Already Logged In or Is Not A User");
+                catch (IsNotUser exception){
+                    JOptionPane.showMessageDialog(null,"User does not exist.");
+                    textPass.setText("");
+                    textUsername.setText("");
+                    return;
+                }catch (AlreadyLoggedIn ex){
+                    JOptionPane.showMessageDialog(null,"User is already logged in.");
+                    textPass.setText("");
+                    textUsername.setText("");
                     return;
                 }
                 homePage.setVisible(true);
