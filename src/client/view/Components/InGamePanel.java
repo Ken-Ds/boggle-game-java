@@ -772,7 +772,15 @@ public class InGamePanel extends JPanel {
         buttonEnter.setText("Enter");
         buttonEnter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                setButtonEnter(evt);
+                setButtonEnterAction(evt);
+            }
+        });
+        buttonEnter.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    setButtonEnter(evt);
+                }
             }
         });
 
@@ -789,13 +797,8 @@ public class InGamePanel extends JPanel {
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                     String text = textWord.getText();
                     if (!text.isEmpty()) {
-
                         textWord.setText(text.substring(0, text.length() - 1));
-
-
                         char deletedChar = text.charAt(text.length() - 1);
-
-
                         JLabel lastDisabledLabel = null;
                         for (JLabel label : labelArray) {
                             if (!label.isEnabled() && label.getText().charAt(0) == deletedChar) {
@@ -819,7 +822,6 @@ public class InGamePanel extends JPanel {
         labelTimer.setFont(new java.awt.Font("Segoe UI", 1, 43));
         labelTimer.setForeground(new java.awt.Color(255, 255, 255));
         labelTimer.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTimer.setText("0:30");
 
         GroupLayout panelTimerLayout = new GroupLayout(panelTimer);
         panelTimer.setLayout(panelTimerLayout);
@@ -890,7 +892,6 @@ public class InGamePanel extends JPanel {
         labelEnteredWord.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
         labelEnteredWord.setForeground(new java.awt.Color(255, 255, 255));
         labelEnteredWord.setHorizontalAlignment(SwingConstants.CENTER);
-        labelEnteredWord.setText("WEAK");
 
         GroupLayout panelWordsLayout = new GroupLayout(panelWords);
         panelWords.setLayout(panelWordsLayout);
@@ -1024,16 +1025,58 @@ public class InGamePanel extends JPanel {
         }
     }
 
-    public void setButtonEnter(ActionEvent evt){
-        System.out.println(textWord.getText());
-        MainClient.connect.clientInterfaceImplementation.submitWord(textWord.getText(),MainClient.username);
+//    public void setButtonEnter(ActionEvent evt){
+//        System.out.println(textWord.getText());
+//        MainClient.connect.clientInterfaceImplementation.submitWord(textWord.getText(),MainClient.username);
+//        textWord.setText("");
+//        setLabelsEnabled(true);
+//        if (lastClickedLabel != null) {
+//            lastClickedLabel.setForeground(Color.BLACK);
+//        }
+//        labelsClickable = true;
+//    }
+//    public void setEnterButton(KeyEvent evt){
+//        System.out.println(textWord.getText());
+//        MainClient.connect.clientInterfaceImplementation.submitWord(textWord.getText(),MainClient.username);
+//        textWord.setText("");
+//        setLabelsEnabled(true);
+//        if (lastClickedLabel != null) {
+//            lastClickedLabel.setForeground(Color.BLACK);
+//        }
+//        labelsClickable = true;
+//    }
+
+
+    private void handleButtonClick() {
+        String enteredWord = textWord.getText();
+        MainClient.connect.clientInterfaceImplementation.submitWord(enteredWord, MainClient.username);
         textWord.setText("");
         setLabelsEnabled(true);
         if (lastClickedLabel != null) {
             lastClickedLabel.setForeground(Color.BLACK);
         }
         labelsClickable = true;
+
+
+        JLabel newWordLabel = new JLabel(enteredWord);
+        newWordLabel.setFont(new Font("Bodoni MT", Font.PLAIN, 20));
+        newWordLabel.setForeground(Color.WHITE);
+        panelWords.setLayout(new BoxLayout(panelWords, BoxLayout.Y_AXIS));
+        panelWords.add(newWordLabel);
+        panelWords.revalidate();
+        panelWords.repaint();
     }
+
+    public void setButtonEnterAction(ActionEvent evt) {
+        handleButtonClick();
+    }
+
+    public void setButtonEnter(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            handleButtonClick();
+        }
+    }
+
     public void setLetters(String username) {
         try {
             char[] letters = MainClient.connect.clientInterfaceImplementation.getLetters(username); // Retrieve random letters from the server

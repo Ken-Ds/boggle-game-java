@@ -128,7 +128,7 @@ public class ParseDatabase {
             preparedStatement.setString(1,username);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                player = new Player(resultSet.getInt(1),resultSet.getString(2));
+                player = new Player(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4));
             }
             resultSet.close();
         }catch (Exception e){
@@ -185,4 +185,29 @@ public class ParseDatabase {
         }
         return false;
     }
+    public boolean checkDuplicateUsername(String username) {
+        try {
+
+            // Create a PreparedStatement to execute the query
+            PreparedStatement pst = connection.prepareStatement("SELECT * FROM accounts WHERE username = ?");
+            pst.setString(1, username);
+
+            // Execute the query
+            ResultSet rs = pst.executeQuery();
+
+            // If any result is returned, the username already exists
+            if (rs.next()) {
+                return true;
+            }
+
+            // Close the connections
+            rs.close();
+            pst.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
 }

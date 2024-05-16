@@ -61,6 +61,7 @@ public class ServerMain extends JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }
 
     private JPanel createSideMenuPanel() {
@@ -226,7 +227,7 @@ public class ServerMain extends JFrame {
             public void run() {
                 ServerMain serverMain = new ServerMain();
                 serverMain.setVisible(true);
-                serverMain.setLocationRelativeTo(null); // Center the frame
+
 
             }
         });

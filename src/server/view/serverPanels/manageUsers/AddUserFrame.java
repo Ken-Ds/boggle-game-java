@@ -235,27 +235,32 @@ public class AddUserFrame extends JFrame {
         String password = new String(jPasswordField1.getText());
 
         if (!username.isEmpty() && !password.isEmpty()) {
+            if (parseDatabase.checkDuplicateUsername(username)) {
+                JOptionPane.showMessageDialog(this, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+                usernameInput.setText("");
+                jPasswordField1.setText("");
+                return;
+            }
+
             // Here, you would typically add the user to your system
             // For demonstration purposes, let's just print the entered username and password
             System.out.println("Username: " + username);
             System.out.println("Password: " + password);
+
             // You may want to clear the input fields after adding the user
             usernameInput.setText("");
             jPasswordField1.setText("");
+
             parseDatabase.setConnection();
-            parseDatabase.addUser(username,password);
+            parseDatabase.addUser(username, password);
             dispose();
 
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    MainServer.serverMain.manageUsersPanel.setJTable1(new SetJTable().setUsersTable());
-                }
-            });
+            SwingUtilities.invokeLater(() -> MainServer.serverMain.manageUsersPanel.setJTable1(new SetJTable().setUsersTable()));
         } else {
             JOptionPane.showMessageDialog(this, "Please enter both username and password", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private void cancelButtonActionPerformed(ActionEvent evt) {
         // Close the frame or perform other actions on cancel

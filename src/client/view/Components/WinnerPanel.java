@@ -208,25 +208,17 @@ public class WinnerPanel extends JPanel {
             System.out.println("Image not found in classpath.");
         }
 
-        URL imageURL1 = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/shrek.gif");
+        URL imageURL1 = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/fiona.gif");
         if (imageURL1 != null) {
             ImageIcon icon = new ImageIcon(imageURL1);
             labelICON.setIcon(icon);
             add(labelICON);
-            labelICON.setBounds(220, 0, 930, 700);
+            labelICON.setBounds(0, 0, 930, 700);
         } else {
             System.out.println("Image not found in classpath.");
         }
 
-        URL imageURL2 = ClassLoader.getSystemClassLoader().getResource("client/view/Icon/shrek.gif");
-        if (imageURL2 != null) {
-            ImageIcon icon = new ImageIcon(imageURL2);
-            labelICON1.setIcon(icon);
-            add(labelICON1);
-            labelICON1.setBounds(0, 0, 230, 700);
-        } else {
-            System.out.println("Image not found in classpath.");
-        }
+
 
     }// </editor-fold>
     class RoundedPanel extends JPanel
