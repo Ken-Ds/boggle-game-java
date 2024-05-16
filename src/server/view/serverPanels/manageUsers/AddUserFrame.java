@@ -226,6 +226,9 @@ public class AddUserFrame extends JFrame {
         setLocationRelativeTo(null);
     }
 
+
+
+
     private void addButtonActionPerformed(ActionEvent evt) {
         ParseDatabase parseDatabase = new ParseDatabase();
         String username = usernameInput.getText();

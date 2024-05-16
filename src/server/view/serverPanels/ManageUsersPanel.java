@@ -4,10 +4,10 @@ import server.MainServer;
 import server.model.ParseDatabase;
 import server.model.SetJTable;
 import server.view.serverPanels.manageUsers.AddUserFrame;
-import server.view.serverPanels.manageUsers.DeleteUserFrame;
-import server.view.serverPanels.manageUsers.EditUserFrame;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,6 +24,12 @@ public class ManageUsersPanel extends JPanel {
     private JTable jTable1;
     private JTextField jTextField1;
     private JPanel usersPanel;
+    private JLabel usernameLabel;
+    private JLabel passwordLabel;
+    private JTextField usernameInput;
+    private JTextField passwordInput;
+    private JTextField idInput;
+
 
     public ManageUsersPanel() {
         initComponents();
@@ -40,10 +46,50 @@ public class ManageUsersPanel extends JPanel {
         addButton = new JButton();
         editButton = new JButton();
         deleteButton = new JButton();
-
+        usernameLabel = new JLabel();
+        passwordLabel = new JLabel();
+        usernameInput = new JTextField();
+        passwordInput = new JTextField();
+        idInput = new JTextField();
+        idInput.setEditable(false);
+        usernameInput.setPreferredSize(new Dimension(200, 25));
+        passwordInput.setPreferredSize(new Dimension(200, 25));
         setBackground(new Color(83, 123, 47));
         setPreferredSize(new Dimension());
         usersPanel.setBackground(new Color(228, 235, 156));
+        usernameLabel = new JLabel("Username:");
+        usernameLabel.setFont(new Font("Ink Free", 1, 24));
+        idInput = new JTextField(); // Initialize the new JTextField for ID
+        idInput.setPreferredSize(new Dimension(200, 25)); // Set the preferred size
+
+        JLabel idLabel = new JLabel("ID:"); // Create a label for the ID field
+        idLabel.setFont(new Font("Ink Free", 1, 24)); // Set the font
+
+        idLabel.setPreferredSize(new Dimension(120, 25)); // Set the preferred size for the label
+
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selectedRow = jTable1.getSelectedRow();
+                if (selectedRow >= 0) {
+                    String username = jTable1.getModel().getValueAt(selectedRow,1).toString();
+                    String password = jTable1.getModel().getValueAt(selectedRow,2).toString();
+                    String id = jTable1.getModel().getValueAt(selectedRow,0).toString();
+                    usernameInput.setText(username);
+                    passwordInput.setText(password);
+                    idInput.setText(id);
+
+                }
+
+            }
+        });
+
+        passwordLabel = new JLabel("Password:");
+        passwordLabel.setFont(new Font("Ink Free", 1, 24));
+
+// Set the preferred size for the labels
+        usernameLabel.setPreferredSize(new Dimension(120, 25));
+        passwordLabel.setPreferredSize(new Dimension(120, 25));
 
         jPanel1.setBackground(new Color(45, 81, 40));
 
@@ -67,6 +113,7 @@ public class ManageUsersPanel extends JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
+
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,14 +210,33 @@ public class ManageUsersPanel extends JPanel {
                                                 .addComponent(editButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(101, 101, 101)
                                                 .addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(usersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(usersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(idLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE) // Add the ID label
+                                        .addComponent(idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE) // Add the ID input field
+                                        .addComponent(usernameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(passwordInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(43, Short.MAX_VALUE))
         );
+
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addComponent(usersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(usernameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(passwordInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(idLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE) // Add the ID label
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(idInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE) // Add the ID input field
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(addButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -178,6 +244,7 @@ public class ManageUsersPanel extends JPanel {
                                         .addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(20, Short.MAX_VALUE))
         );
+
     }
 
     private void addButtonActionPerformed(ActionEvent evt) {
@@ -188,10 +255,14 @@ public class ManageUsersPanel extends JPanel {
     }
 
     private void editButtonActionPerformed(ActionEvent evt) {
-        // Open EditUserFrame when Edit button is clicked
-        EditUserFrame editUserFrame = new EditUserFrame();
-        editUserFrame.setVisible(true);
-        editUserFrame.setLocationRelativeTo(this);
+        ParseDatabase parseDatabase = new ParseDatabase();
+        parseDatabase.setConnection();
+        String username = usernameInput.getText();
+        String password = passwordInput.getText();
+        int id = Integer.parseInt(idInput.getText());
+        parseDatabase.editUser(id,username,password);
+        jTable1.setModel(new SetJTable().setUsersTable());
+
     }
 
     private void deleteButtonActionPerformed(ActionEvent evt) {
