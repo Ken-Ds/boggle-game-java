@@ -2,12 +2,7 @@ package client.view.Components;
 
 import client.MainClient;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.net.URL;
 
 
@@ -25,6 +20,7 @@ public class WaitingPlayerPanel extends JPanel {
     private JPanel panelWaitPlayer;
     private JPanel panelWaitingTimer;
     private JScrollPane scrollPlayers;
+    private String[] names;
 
 
     public WaitingPlayerPanel() {
@@ -95,6 +91,7 @@ public class WaitingPlayerPanel extends JPanel {
         add(panelWaitingTimer);
         panelWaitingTimer.setBounds(590, 560, 260, 72);
 
+
         panelInGame.setBackground(new java.awt.Color(255, 255, 255));
         panelInGame.setOpaque(false);
         panelInGame.setPreferredSize(new java.awt.Dimension(241, 53));
@@ -118,42 +115,31 @@ public class WaitingPlayerPanel extends JPanel {
         add(panelInGame);
         panelInGame.setBounds(11, 13, 220, 53);
 
+        scrollPlayers.setBackground(new java.awt.Color(45, 81, 40));
         scrollPlayers.setBorder(null);
         scrollPlayers.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPlayers.setOpaque(false);
 
         panelPlayers.setBackground(new java.awt.Color(45, 81, 40));
-        panelPlayers.setPreferredSize(new java.awt.Dimension(506, 810));
+        panelPlayers.setLayout(new BoxLayout(panelPlayers, BoxLayout.Y_AXIS));
 
-        labelPlayerName.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
-        labelPlayerName.setForeground(new java.awt.Color(255, 255, 255));
-        labelPlayerName.setText("Kendick");
+        names = MainClient.connect.clientInterfaceImplementation.getGamePlayers(MainClient.username);
 
-        labelScore.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
-        labelScore.setForeground(new java.awt.Color(255, 255, 255));
-        labelScore.setHorizontalAlignment(SwingConstants.CENTER);
-        labelScore.setText("-9");
+        for (int x = 0; x < names.length; x++) {
+            System.out.println(names[x]);
+            JPanel playerPanel = new JPanel();
+            playerPanel.setBackground(new java.awt.Color(45, 81, 40));
+            playerPanel.setLayout(new GridLayout(1, 2));
 
-        GroupLayout panelPlayersLayout = new GroupLayout(panelPlayers);
-        panelPlayers.setLayout(panelPlayersLayout);
-        panelPlayersLayout.setHorizontalGroup(
-                panelPlayersLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelPlayersLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelPlayerName, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelScore, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(306, Short.MAX_VALUE))
-        );
-        panelPlayersLayout.setVerticalGroup(
-                panelPlayersLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelPlayersLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panelPlayersLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelPlayerName, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                                        .addComponent(labelScore, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
-                                .addGap(752, 752, 752))
-        );
+            JLabel labelPlayer = new JLabel();
+            labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
+            labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
+            labelPlayer.setText(names[x]);
 
+            playerPanel.add(labelPlayer);
+
+            panelPlayers.add(playerPanel);
+        }
         scrollPlayers.setViewportView(panelPlayers);
 
         add(scrollPlayers);
@@ -218,5 +204,9 @@ public class WaitingPlayerPanel extends JPanel {
 
     public void setLabelWaitingTimer(String time){
         labelWaitingTimer.setText(time);
+    }
+
+    public void setNames(String[] names){
+        this.names = names;
     }
 }

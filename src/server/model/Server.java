@@ -129,7 +129,7 @@ public class Server{
                         System.out.println("Game Started!");
                         games.get(gameId).gameStart();
                         games.get(gameId).nextRound();
-                        waitingTime = temp;
+                        games.get(gameId).setWaitingTime(temp);
                         startGame(gameId);
                     } else {
                         games.get(gameId).gameEnd();
@@ -159,9 +159,11 @@ public class Server{
                     countdown--;
                     games.get(gameId).setRoundTime(countdown);
                 } else {
+                    setGameRoundScore(gameId);
                     System.out.println("Round Ended!");
                     System.out.println(playerWords);
-                    setGameRoundScore(gameId);
+                    games.get(gameId).setRoundTime(temp);
+                    startWaitTimer(gameId);
                     timer.cancel();
                 }
             }

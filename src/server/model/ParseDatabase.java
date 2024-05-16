@@ -162,6 +162,7 @@ public class ParseDatabase {
     }
 
     public boolean isValidWord(String word){
+        System.out.println(word);
         try{
             String query = "SELECT word FROM WORDS WHERE word = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);

@@ -3,12 +3,7 @@ package client.view.Components;
 
 import client.MainClient;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -779,14 +774,10 @@ public class InGamePanel extends JPanel {
         buttonEnter.setText("Enter");
         buttonEnter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                textWord.setText("");
-                setLabelsEnabled(true);
-                if (lastClickedLabel != null) {
-                    lastClickedLabel.setForeground(Color.BLACK);
-                }
-                labelsClickable = true;
+                setButtonEnter(evt);
             }
         });
+
         buttonEnter.setBorder(null);
         add(buttonEnter);
         buttonEnter.setBounds(730, 520, 100, 43);
@@ -931,36 +922,32 @@ public class InGamePanel extends JPanel {
         scrollScoreboardd.setOpaque(false);
 
         panelScores.setBackground(new java.awt.Color(45, 81, 40));
+        panelScores.setLayout(new BoxLayout(panelScores, BoxLayout.Y_AXIS));
 
-        labelScore.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelScore.setForeground(new java.awt.Color(255, 255, 255));
-        labelScore.setHorizontalAlignment(SwingConstants.CENTER);
-        labelScore.setText("-9");
+        String[] names = MainClient.connect.clientInterfaceImplementation.getGamePlayers(MainClient.username);
+        int[] scores = MainClient.connect.clientInterfaceImplementation.getGameScores(MainClient.username);
 
-        labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
-        labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
-        labelPlayer.setText("Kendick");
+        for (int x = 0; x < names.length; x++) {
+            JPanel playerPanel = new JPanel();
+            playerPanel.setBackground(new java.awt.Color(45, 81, 40));
+            playerPanel.setLayout(new GridLayout(1, 2));
 
-        GroupLayout panelScoresLayout = new GroupLayout(panelScores);
-        panelScores.setLayout(panelScoresLayout);
-        panelScoresLayout.setHorizontalGroup(
-                panelScoresLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelScoresLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelPlayer, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelScore, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelScoresLayout.setVerticalGroup(
-                panelScoresLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelScoresLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(panelScoresLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelPlayer, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelScore, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(536, Short.MAX_VALUE))
-        );
+            JLabel labelPlayer = new JLabel();
+            labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
+            labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
+            labelPlayer.setText(names[x]);
+
+            JLabel labelScore = new JLabel();
+            labelScore.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+            labelScore.setForeground(new java.awt.Color(255, 255, 255));
+            labelScore.setHorizontalAlignment(SwingConstants.CENTER);
+            labelScore.setText(String.valueOf(scores[x]));
+
+            playerPanel.add(labelPlayer);
+            playerPanel.add(labelScore);
+
+            panelScores.add(playerPanel);
+        }
 
         scrollScoreboardd.setViewportView(panelScores);
 
@@ -1037,6 +1024,17 @@ public class InGamePanel extends JPanel {
 //            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
 //
         }
+    }
+
+    public void setButtonEnter(ActionEvent evt){
+        System.out.println(textWord.getText());
+        MainClient.connect.clientInterfaceImplementation.submitWord(textWord.getText(),MainClient.username);
+        textWord.setText("");
+        setLabelsEnabled(true);
+        if (lastClickedLabel != null) {
+            lastClickedLabel.setForeground(Color.BLACK);
+        }
+        labelsClickable = true;
     }
     public void setLetters(String username) {
         try {

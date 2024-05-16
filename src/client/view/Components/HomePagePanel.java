@@ -29,6 +29,7 @@ public class HomePagePanel extends JPanel {
     private JPanel panelScrollLeaderB;
     private JPanel panelStart;
     private JScrollPane scrollLeaderboard;
+
     /**
      * Creates new form Title
      */
@@ -130,7 +131,6 @@ public class HomePagePanel extends JPanel {
 
         for (int x = 0; x < highNames.length; x++) {
             JPanel playerPanel = new JPanel();
-            GridLayout gridLayout = new GridLayout(1,2);
             playerPanel.setBackground(new java.awt.Color(45, 81, 40));
             playerPanel.setLayout(new GridLayout(1, 2));
 
@@ -220,36 +220,11 @@ public class HomePagePanel extends JPanel {
 
     private void labelStartMouseClicked(java.awt.event.MouseEvent evt) {
         MainClient.connect.clientInterfaceImplementation.startGame(MainClient.username);
-        WaitingMenu waitingMenu = new WaitingMenu();
 
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         parentFrame.dispose();
-        waitingMenu.setVisible(true);
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            int remainingTime = MainClient.connect.clientInterfaceImplementation.getWaitingTime(MainClient.username)+1;
 
-            @Override
-            public void run() {
-                if (remainingTime > 0) {
-                    SwingUtilities.invokeLater(() -> waitingMenu.waitingPlayerPanel1.setLabelWaitingTimer(""+remainingTime));
-                    remainingTime--;
-                } else {
-                    if(MainClient.connect.clientInterfaceImplementation.gameStatus(MainClient.username)){
-                        waitingMenu.dispose();
-                        startGame();
-                    }else{
-                        waitingMenu.dispose();
-                        HomePage homePage = new HomePage();
-                        homePage.setVisible(true);
-                    }
-                    timer.cancel();
-                }
-            }
-        };
-
-        // Schedule the task to run every second (1000 milliseconds)
-        timer.scheduleAtFixedRate(task, 0, 1000);
+       waitForPlayers();
     }
 
     private void labelExitMouseClicked(java.awt.event.MouseEvent evt) {
@@ -300,6 +275,40 @@ public class HomePagePanel extends JPanel {
 //            graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
 //
         }
+    }
+
+    public void waitForPlayers(){
+        WaitingMenu waitingMenu = new WaitingMenu();
+        waitingMenu.setVisible(true);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            int remainingTime = MainClient.connect.clientInterfaceImplementation.getWaitingTime(MainClient.username)+1;
+
+            @Override
+            public void run() {
+                if (remainingTime > 0) {
+                    SwingUtilities.invokeLater(() -> waitingMenu.waitingPlayerPanel1.setLabelWaitingTimer(""+remainingTime));
+                    SwingUtilities.invokeLater(() -> waitingMenu.waitingPlayerPanel1.setNames(
+                            MainClient.connect.clientInterfaceImplementation.getGamePlayers(MainClient.username)));
+                    SwingUtilities.invokeLater(() -> waitingMenu.waitingPlayerPanel1.revalidate());
+                    SwingUtilities.invokeLater(() -> waitingMenu.waitingPlayerPanel1.repaint());
+                    remainingTime--;
+                } else {
+                    if(MainClient.connect.clientInterfaceImplementation.gameStatus(MainClient.username)){
+                        waitingMenu.dispose();
+                        startGame();
+                    }else{
+                        waitingMenu.dispose();
+                        HomePage homePage = new HomePage();
+                        homePage.setVisible(true);
+                    }
+                    timer.cancel();
+                }
+            }
+        };
+
+        // Schedule the task to run every second (1000 milliseconds)
+        timer.scheduleAtFixedRate(task, 0, 1000);
     }
 
     public void startGame(){
@@ -355,4 +364,5 @@ public class HomePagePanel extends JPanel {
         Winner winner = new Winner();
         winner.setVisible(true);
     }
+
 }

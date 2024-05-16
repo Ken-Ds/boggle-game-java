@@ -92,6 +92,7 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
     @Override
     public void submitWord(String word, String username) {
         Boolean isUnique = true;
+        word = word.toLowerCase();
         Player player = parseDatabase.getPlayerInfo(username);
         if (parseDatabase.isValidWord(word)) {
             System.out.println("Valid Word");

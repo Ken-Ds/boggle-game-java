@@ -1,12 +1,9 @@
 package client.view.Components;
 
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
-import java.awt.RenderingHints;
+import client.MainClient;
+
+import java.awt.*;
 import java.net.URL;
 
 
@@ -104,145 +101,70 @@ public class AfterRoundPanel extends JPanel {
         scrollScoreboardd.setOpaque(false);
 
         panelScores.setBackground(new java.awt.Color(45, 81, 40));
+        panelScores.setLayout(new BoxLayout(panelScores, BoxLayout.Y_AXIS));
 
-        labelScore.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        labelScore.setForeground(new java.awt.Color(255, 255, 255));
-        labelScore.setHorizontalAlignment(SwingConstants.CENTER);
-        labelScore.setText("-9");
+        String[] names = MainClient.connect.clientInterfaceImplementation.getGamePlayers(MainClient.username);
+        int[] scores = MainClient.connect.clientInterfaceImplementation.getGameScores(MainClient.username);
 
-        labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
-        labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
-        labelPlayer.setText("Kendick");
+        for (int x = 0; x < names.length; x++) {
+            JPanel playerPanel = new JPanel();
+            playerPanel.setBackground(new java.awt.Color(45, 81, 40));
+            playerPanel.setLayout(new GridLayout(1, 2));
 
-        GroupLayout panelScoresLayout = new GroupLayout(panelScores);
-        panelScores.setLayout(panelScoresLayout);
-        panelScoresLayout.setHorizontalGroup(
-                panelScoresLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelScoresLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelPlayer, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelScore, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelScoresLayout.setVerticalGroup(
-                panelScoresLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelScoresLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(panelScoresLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(labelPlayer, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(labelScore, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(536, Short.MAX_VALUE))
-        );
+            JLabel labelPlayer = new JLabel();
+            labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
+            labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
+            labelPlayer.setText(names[x]);
+
+            JLabel labelScore = new JLabel();
+            labelScore.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+            labelScore.setForeground(new java.awt.Color(255, 255, 255));
+            labelScore.setHorizontalAlignment(SwingConstants.CENTER);
+            labelScore.setText(String.valueOf(scores[x]));
+
+            playerPanel.add(labelPlayer);
+            playerPanel.add(labelScore);
+
+            panelScores.add(playerPanel);
+        }
 
         scrollScoreboardd.setViewportView(panelScores);
 
         add(scrollScoreboardd);
         scrollScoreboardd.setBounds(10, 70, 220, 600);
 
-        scrollWordScore.setBackground(new java.awt.Color(45, 81, 40));
-        scrollWordScore.setBorder(null);
-        scrollWordScore.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollWordScore.setOpaque(false);
-
-        panelWordScore.setBackground(new java.awt.Color(45, 81, 40));
-
-        labelWord.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
-        labelWord.setForeground(new java.awt.Color(255, 255, 255));
-        labelWord.setHorizontalAlignment(SwingConstants.CENTER);
-        labelWord.setText("WEAK");
-
-        labelWordScore.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
-        labelWordScore.setForeground(new java.awt.Color(255, 255, 255));
-        labelWordScore.setHorizontalAlignment(SwingConstants.CENTER);
-        labelWordScore.setText("15");
-
-        GroupLayout panelWordScoreLayout = new GroupLayout(panelWordScore);
-        panelWordScore.setLayout(panelWordScoreLayout);
-        panelWordScoreLayout.setHorizontalGroup(
-                panelWordScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelWordScoreLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelWord, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelWordScore, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(24, Short.MAX_VALUE))
-        );
-        panelWordScoreLayout.setVerticalGroup(
-                panelWordScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelWordScoreLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panelWordScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(labelWord, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                                        .addComponent(labelWordScore, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(556, Short.MAX_VALUE))
-        );
-
-        scrollWordScore.setViewportView(panelWordScore);
-
-        add(scrollWordScore);
-        scrollWordScore.setBounds(920, 70, 220, 600);
-
-        panelWordsScore.setBackground(new java.awt.Color(255, 255, 255));
-        panelWordsScore.setOpaque(false);
-
-        labelTitleWordScore.setFont(new java.awt.Font("Bodoni MT", 1, 20)); // NOI18N
-        labelTitleWordScore.setForeground(new java.awt.Color(255, 255, 255));
-        labelTitleWordScore.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTitleWordScore.setText("Word Score");
-
-        GroupLayout panelWordsScoreLayout = new GroupLayout(panelWordsScore);
-        panelWordsScore.setLayout(panelWordsScoreLayout);
-        panelWordsScoreLayout.setHorizontalGroup(
-                panelWordsScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, panelWordsScoreLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(labelTitleWordScore, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
-        );
-        panelWordsScoreLayout.setVerticalGroup(
-                panelWordsScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, panelWordsScoreLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(labelTitleWordScore, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-        );
-
-        add(panelWordsScore);
-        panelWordsScore.setBounds(920, 10, 220, 50);
 
         scrollRoundScore.setBackground(new java.awt.Color(228, 235, 156));
         scrollRoundScore.setBorder(null);
         scrollRoundScore.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         panelRoundScore.setBackground(new java.awt.Color(228, 235, 156));
+        panelRoundScore.setLayout(new BoxLayout(panelRoundScore, BoxLayout.Y_AXIS));
 
-        labelName.setFont(new java.awt.Font("Bodoni MT", 0, 24)); // NOI18N
-        labelName.setText("Emman");
+        String[] scoreNames = MainClient.connect.clientInterfaceImplementation.getGamePlayers(MainClient.username);
+        int[] scoreScores = MainClient.connect.clientInterfaceImplementation.getRoundScores(MainClient.username);
 
-        labelRoundScoree.setFont(new java.awt.Font("Segoe UI", 0, 21)); // NOI18N
-        labelRoundScoree.setHorizontalAlignment(SwingConstants.CENTER);
-        labelRoundScoree.setText("17");
+        for (int x = 0; x < scoreNames.length; x++) {
+            JPanel playerPanel = new JPanel();
+            playerPanel.setBackground(new java.awt.Color(45, 81, 40));
+            playerPanel.setLayout(new GridLayout(1, 2));
 
-        GroupLayout panelRoundScoreLayout = new GroupLayout(panelRoundScore);
-        panelRoundScore.setLayout(panelRoundScoreLayout);
-        panelRoundScoreLayout.setHorizontalGroup(
-                panelRoundScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelRoundScoreLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelName, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelRoundScoree, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(52, Short.MAX_VALUE))
-        );
-        panelRoundScoreLayout.setVerticalGroup(
-                panelRoundScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(panelRoundScoreLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panelRoundScoreLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(labelName, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                                        .addComponent(labelRoundScoree, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(299, Short.MAX_VALUE))
-        );
+            JLabel labelPlayer = new JLabel();
+            labelPlayer.setFont(new java.awt.Font("Bodoni MT", 0, 20)); // NOI18N
+            labelPlayer.setForeground(new java.awt.Color(255, 255, 255));
+            labelPlayer.setText(scoreNames[x]);
 
+            JLabel labelScore = new JLabel();
+            labelScore.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+            labelScore.setForeground(new java.awt.Color(255, 255, 255));
+            labelScore.setHorizontalAlignment(SwingConstants.CENTER);
+            labelScore.setText(String.valueOf(scoreScores[x]));
+
+            playerPanel.add(labelPlayer);
+            playerPanel.add(labelScore);
+
+            panelRoundScore.add(playerPanel);
+        }
         scrollRoundScore.setViewportView(panelRoundScore);
 
         add(scrollRoundScore);
