@@ -5,6 +5,8 @@ import server.model.ParseDatabase;
 import java.util.*;
 
 public class Game {
+
+    private int gameID;
     private int round;
     private static int waitingTime;
     private static int roundTime;
@@ -17,7 +19,8 @@ public class Game {
 
     private Boolean stat;
 
-    public Game(Player player, int waitingTime, int roundTime) {
+    public Game(int gameID,Player player, int waitingTime, int roundTime) {
+        this.gameID = gameID;
         round = 0;
         this.waitingTime = waitingTime;
         this.roundTime = roundTime;
@@ -92,9 +95,6 @@ public class Game {
         } else {
             round++;
             letters = setLetters();
-            for (int x = 0; x < players.size(); x++) {
-                roundScores.put(players.get(x).getUsername(), 0);
-            }
         }
     }
 
@@ -195,14 +195,15 @@ public class Game {
         stat = false;
     }
 
+    public void removeAllPlayers(){
+        players = new ArrayList<>();
+    }
     public boolean thereIsWinner(){
         for (Player player: players){
             if(gameScores.get(player.getUsername()) == 3){
                 gameWinner = player;
                 int score = overAllScore.get(player.getUsername());
-                ParseDatabase parseDatabase = new ParseDatabase();
-                parseDatabase.setConnection();
-                parseDatabase.setHighScore(player.getId(),score);
+                System.out.println(gameWinner.getUsername() + " Score: " + score);
                 return true;
             }
         }
@@ -229,5 +230,11 @@ public class Game {
             overAllScores.add(overAllScore.get(player.getUsername()));
         }
         return overAllScores;
+    }
+
+    public void clearScores(){
+        for (int x = 0; x < players.size(); x++) {
+            roundScores.put(players.get(x).getUsername(), 0);
+        }
     }
 }

@@ -140,8 +140,10 @@ public class ParseDatabase {
     public void setHighScore(int id, int newHighScore){
         int highScore = 0;
         try {
+            System.out.println(id + " " + newHighScore);
             String query = "SELECT highscore FROM accounts WHERE id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 highScore = resultSet.getInt(1);
@@ -150,14 +152,14 @@ public class ParseDatabase {
 
             if (highScore < newHighScore) {
                 String query2 = "UPDATE accounts SET highscore=? WHERE id=?";
-                PreparedStatement preparedStatement2 = connection.prepareStatement(query);
-                preparedStatement2.setInt(1,highScore);
-                preparedStatement2.setInt(2,id);
-                preparedStatement2.execute(query2);
+                PreparedStatement preparedStatement2 = connection.prepareStatement(query2);
+                preparedStatement2.setInt(2, id);
+                preparedStatement2.setInt(1, newHighScore);
+                preparedStatement2.execute();
             }
             System.out.println("HighScore Changed");
         }catch (Exception e){
-            System.out.println("Unable to edit HighScore");
+            e.printStackTrace();
         }
     }
 

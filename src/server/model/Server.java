@@ -22,7 +22,7 @@ public class Server{
     private static int gameId = 0;
     public static ArrayList<Player> playersLoggedIn = new ArrayList<>();
 
-    public static Hashtable<Integer,Game> games = new Hashtable<>();
+    public static ArrayList<Game> games = new ArrayList<>();
 
     public static Hashtable<String,ArrayList<String>> playerWords = new Hashtable<>();
 
@@ -58,10 +58,10 @@ public class Server{
 
     public static void playGame(Player player){
         if (games.isEmpty())
-            games.put(gameId, (new Game(player, waitingTime,roundTime)));
+            games.add((new Game(gameId, player, waitingTime,roundTime)));
         else {
             gameId = games.size();
-            games.put(gameId, new Game(player, waitingTime, roundTime));
+            games.add(new Game(gameId, player, waitingTime, roundTime));
         }
         startWaitTimer(gameId);
     }
@@ -127,14 +127,16 @@ public class Server{
                 } else {
                     if(games.get(gameId).getPlayers().size() > 1 && !games.get(gameId).thereIsWinner()){
                         System.out.println("Game Started!");
+                        games.get(gameId).clearScores();
                         games.get(gameId).gameStart();
-                        games.get(gameId).nextRound();
                         games.get(gameId).setWaitingTime(temp);
                         startGame(gameId);
                     } else {
                         games.get(gameId).gameEnd();
-                        if (games.get(gameId).gameWinner() != null){
+                        if (!games.get(gameId).gameWinner().getUsername().equals("none")){
                             System.out.println(games.get(gameId).gameWinner()+ "won the game");
+                            Player player = new ParseDatabase().getPlayerInfo(games.get(gameId).gameWinner().getUsername());
+                            new ParseDatabase().setHighScore(player.getId(),games.get(gameId).getGameWinnerScore(player.getUsername()));
                         } else {
                             System.out.println("Game Not Started");
                         }
@@ -144,6 +146,7 @@ public class Server{
                 }
             }
         };
+        games.get(gameId).nextRound();
         timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
@@ -181,6 +184,7 @@ public class Server{
                     countdown--;
                 } else {
                     games.remove(gameId);
+                    System.out.println(games);
                     timer.cancel();
                 }
             }
@@ -201,4 +205,5 @@ public class Server{
             }
         }
     }
+
 }
