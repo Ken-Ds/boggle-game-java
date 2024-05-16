@@ -13,7 +13,6 @@ public class Game {
     private Hashtable<String,Integer> gameScores = new Hashtable<>();
     private ArrayList<Character> letters;
     private Hashtable<String, Integer> overAllScore = new Hashtable<>();
-
     private Player gameWinner = null;
 
     private Boolean stat;
@@ -214,6 +213,10 @@ public class Game {
 
     public Player gameWinner(){
         return gameWinner;
+    }
+
+    public int getGameWinnerScore(String username){
+        return overAllScore.get(username);
     }
 
     public void setOverAllScore(Player player){

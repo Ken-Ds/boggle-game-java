@@ -24,5 +24,8 @@ module Boggle{
         string getRoundWinner(in string username);
         boolean gameStatus(in string username);
         void logOut (in string username);
+        string getGameWinner(in string username);
+        long getGameWinnerOverAllScore(in string username);
+        boolean thereIsWinner(in string username);
         };
         };
