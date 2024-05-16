@@ -74,9 +74,7 @@ public class InGamePanel extends JPanel {
     private JLabel[] labelArray;
     private JLabel lastClickedLabel; 
     private boolean labelsClickable = true;
-
-
-
+    private int round = 0;
 
     public InGamePanel() {
         initComponents();
@@ -978,9 +976,9 @@ public class InGamePanel extends JPanel {
         panelScoreboard.setBounds(10, 10, 220, 50);
 
         labelRound.setFont(new java.awt.Font("Bodoni MT", 0, 41)); // NOI18N
-        labelRound.setText("ROUND 1");
+        labelRound.setText("Shrekle Boggle Wiggle");
         add(labelRound);
-        labelRound.setBounds(480, 40, 260, 50);
+        labelRound.setBounds(370, 40, 500, 50);
     }// </editor-fold>
     class RoundedPanel extends JPanel
     {

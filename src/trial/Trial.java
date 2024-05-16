@@ -14,8 +14,6 @@ import java.util.TimerTask;
 
 public class Trial{
     public static void main(String[] args) {
-        ParseDatabase parseDatabase = new ParseDatabase();
-        parseDatabase.setConnection();
-        parseDatabase.setHighScore(1,50);
+
     }
 }
