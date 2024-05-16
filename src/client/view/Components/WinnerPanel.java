@@ -213,7 +213,7 @@ public class WinnerPanel extends JPanel {
             ImageIcon icon = new ImageIcon(imageURL1);
             labelICON.setIcon(icon);
             add(labelICON);
-            labelICON.setBounds(0, 0, 930, 700);
+            labelICON.setBounds(0, 0, 1150, 700);
         } else {
             System.out.println("Image not found in classpath.");
         }
