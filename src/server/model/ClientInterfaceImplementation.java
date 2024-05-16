@@ -205,6 +205,8 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
     @Override
     public boolean thereIsWinner(String username) {
-        return false;
+        Player player = parseDatabase.getPlayerInfo(username);
+        int game = Server.checkPlayerGame(player);
+        return Server.games.get(game).thereIsWinner();
     }
 }

@@ -181,7 +181,7 @@ public class WinnerPanel extends JPanel {
         labelTotalScore.setFont(new java.awt.Font("Bodoni MT", 0, 32)); // NOI18N
         labelTotalScore.setForeground(new java.awt.Color(255, 255, 255));
         labelTotalScore.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTotalScore.setText("3335");
+        labelTotalScore.setText(String.valueOf(MainClient.connect.clientInterfaceImplementation.getGameWinnerOverAllScore(MainClient.username)));
         add(labelTotalScore);
         labelTotalScore.setBounds(560, 460, 100, 70);
 
@@ -194,7 +194,7 @@ public class WinnerPanel extends JPanel {
         labelPlayerWinner.setFont(new java.awt.Font("Bodoni MT", 0, 32)); // NOI18N
         labelPlayerWinner.setForeground(new java.awt.Color(255, 255, 255));
         labelPlayerWinner.setHorizontalAlignment(SwingConstants.CENTER);
-        labelPlayerWinner.setText("REYREY");
+        labelPlayerWinner.setText(MainClient.connect.clientInterfaceImplementation.getGameWinner(MainClient.username));
         add(labelPlayerWinner);
         labelPlayerWinner.setBounds(460, 320, 280, 50);
 

@@ -13,7 +13,7 @@ public class Game {
     private Hashtable<String,Integer> gameScores = new Hashtable<>();
     private ArrayList<Character> letters;
     private Hashtable<String, Integer> overAllScore = new Hashtable<>();
-    private Player gameWinner = null;
+    private Player gameWinner = new Player(-1,"none");
 
     private Boolean stat;
 
@@ -89,8 +89,6 @@ public class Game {
 
         if(thereIsWinner()) {
             gameEnd();
-
-
         } else {
             round++;
             letters = setLetters();

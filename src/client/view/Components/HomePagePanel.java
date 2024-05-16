@@ -350,11 +350,16 @@ public class HomePagePanel extends JPanel {
                     SwingUtilities.invokeLater(() -> afterRound.afterRoundPanel.setLabelTimer(""+remainingTime));
                     remainingTime--;
                 } else {
-                    afterRound.dispose();
-                    win();
-                    timer.cancel();
+                    if(MainClient.connect.clientInterfaceImplementation.thereIsWinner(MainClient.username)) {
+                        afterRound.dispose();
+                        win();
+                        timer.cancel();
+                    } else {
+                        afterRound.dispose();
+                        startGame();
+                        timer.cancel();
+                    }
                 }
-
             }
         };
         timer.scheduleAtFixedRate(task,0,1000);
