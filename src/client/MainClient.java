@@ -11,5 +11,4 @@ public class MainClient {
         connect.createConnection(args);
         new LogIn().setVisible(true);
     }
-
 }

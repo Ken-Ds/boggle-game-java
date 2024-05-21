@@ -3,9 +3,12 @@ package server.model;
 import Boggle.AlreadyLoggedIn;
 import Boggle.ClientInterfacePOA;
 import Boggle.IsNotUser;
+import server.referenceclass.Game;
 import server.referenceclass.Player;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
@@ -19,10 +22,10 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
     @Override
     public void logIn(String username, String password) throws AlreadyLoggedIn, IsNotUser {
         parseDatabase.setConnection();
-        parseDatabase.validateIfUser(username,password);
-        for (Player player : Server.playersLoggedIn){
+        parseDatabase.validateIfUser(username, password);
+        for (Player player : Server.playersLoggedIn) {
             System.out.print(player.getUsername());
-            if(username.equals(player.getUsername())){
+            if (username.equals(player.getUsername())) {
                 throw new AlreadyLoggedIn("Account is Already LoggedIn");
             }
         }
@@ -34,7 +37,7 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
     public String[] getLeaderBoardsNames() {
         ArrayList<Player> players = parseDatabase.getLeaderBoards();
         String[] names = new String[players.size()];
-        for (int x = 0; x < players.size(); x++){
+        for (int x = 0; x < players.size(); x++) {
             names[x] = players.get(x).getUsername();
         }
         return names;
@@ -44,7 +47,7 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
     public int[] getLeaderBoardsScores() {
         ArrayList<Player> players = parseDatabase.getLeaderBoards();
         int[] scores = new int[players.size()];
-        for (int x = 0; x < players.size(); x++){
+        for (int x = 0; x < players.size(); x++) {
             scores[x] = players.get(x).getHighScore();
         }
         return scores;
@@ -58,8 +61,8 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
             System.out.println(player.getUsername() + " has joined Game " + Server.checkPlayerGame(player));
         }
         else {
-            Server.playGame(player);
-            System.out.println(player.getUsername() + " has started Game " + Server.checkPlayerGame(player));
+        Server.playGame(player);
+        System.out.println(player.getUsername() + " has started Game " + Server.checkPlayerGame(player));
         }
     }
 
@@ -98,21 +101,21 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
             System.out.println("Valid Word");
             int gameId = Server.checkPlayerGame(player);
             ArrayList<Player> players = Server.games.get(gameId).getPlayers();
-            for (int x = 0; x <= players.size()-1; x++){
+            for (int x = 0; x <= players.size() - 1; x++) {
                 Player player1 = players.get(x);
                 ArrayList<String> player1Words = Server.playerWords.get(player1.getUsername());
-                for (int y = 0; y <= player1Words.size()-1; y++){
-                    if (word.equals(player1Words.get(y))){
+                for (int y = 0; y <= player1Words.size() - 1; y++) {
+                    if (word.equals(player1Words.get(y))) {
                         player1Words.remove(y);
                         isUnique = false;
                     }
-                    Server.playerWords.put(player1.getUsername(),player1Words);
+                    Server.playerWords.put(player1.getUsername(), player1Words);
                 }
             }
-            if (isUnique){
+            if (isUnique) {
                 ArrayList<String> playerWords = Server.playerWords.get(username);
                 playerWords.add(word);
-                Server.playerWords.put(username,playerWords);
+                Server.playerWords.put(username, playerWords);
             }
         }
     }
@@ -123,7 +126,7 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
         int game = Server.checkPlayerGame(player);
         ArrayList<Player> players = Server.games.get(game).getPlayers();
         String[] names = new String[players.size()];
-        for (int x = 0; x < players.size(); x++){
+        for (int x = 0; x < players.size(); x++) {
             names[x] = players.get(x).getUsername();
         }
         return names;
@@ -131,11 +134,11 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
     @Override
     public int[] getRoundScores(String username) {
-        Player player =parseDatabase.getPlayerInfo(username);
+        Player player = parseDatabase.getPlayerInfo(username);
         int game = Server.checkPlayerGame(player);
         ArrayList<Integer> roundScores = Server.games.get(game).getRoundScores();
         int[] scores = new int[roundScores.size()];
-        for (int x = 0; x < roundScores.size(); x++){
+        for (int x = 0; x < roundScores.size(); x++) {
             scores[x] = roundScores.get(x);
         }
         return scores;
@@ -143,11 +146,11 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
     @Override
     public int[] getGameScores(String username) {
-        Player player =parseDatabase.getPlayerInfo(username);
+        Player player = parseDatabase.getPlayerInfo(username);
         int game = Server.checkPlayerGame(player);
         ArrayList<Integer> gameScores = Server.games.get(game).getGameScores();
         int[] scores = new int[gameScores.size()];
-        for (int x = 0; x < gameScores.size(); x++){
+        for (int x = 0; x < gameScores.size(); x++) {
             scores[x] = gameScores.get(x);
         }
         return scores;
@@ -155,11 +158,11 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
     @Override
     public int[] getOverAllScores(String username) {
-        Player player =parseDatabase.getPlayerInfo(username);
+        Player player = parseDatabase.getPlayerInfo(username);
         int game = Server.checkPlayerGame(player);
         ArrayList<Integer> overAllScores = Server.games.get(game).getOverAllScores();
         int[] scores = new int[overAllScores.size()];
-        for (int x = 0; x < overAllScores.size(); x++){
+        for (int x = 0; x < overAllScores.size(); x++) {
             scores[x] = overAllScores.get(x);
         }
         return scores;
@@ -182,8 +185,8 @@ public class ClientInterfaceImplementation extends ClientInterfacePOA {
 
     @Override
     public void logOut(String username) {
-        for (int x = 0; x < Server.playersLoggedIn.size(); x++){
-            if (username.equals(Server.playersLoggedIn.get(x).getUsername())){
+        for (int x = 0; x < Server.playersLoggedIn.size(); x++) {
+            if (username.equals(Server.playersLoggedIn.get(x).getUsername())) {
                 Server.playersLoggedIn.remove(x);
             }
         }

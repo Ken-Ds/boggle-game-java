@@ -8,8 +8,8 @@ public class Game {
 
     private int gameID;
     private int round;
-    private static int waitingTime;
-    private static int roundTime;
+    private int waitingTime;
+    private int roundTime;
     private Hashtable<String,Integer> roundScores = new Hashtable<>();
     private ArrayList<Player> players = new ArrayList<>();
     private Hashtable<String,Integer> gameScores = new Hashtable<>();

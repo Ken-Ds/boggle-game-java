@@ -19,7 +19,9 @@ public class Server{
     private List<Player> currentGame;
     public static int waitingTime = 10;
     public static int roundTime = 30;
-    private static int gameId = 0;
+    private Timer waitTimer;
+    private Timer roundTimer;
+    private static int gameID = 0;
     public static ArrayList<Player> playersLoggedIn = new ArrayList<>();
 
     public static ArrayList<Game> games = new ArrayList<>();
@@ -58,12 +60,12 @@ public class Server{
 
     public static void playGame(Player player){
         if (games.isEmpty())
-            games.add((new Game(gameId, player, waitingTime,roundTime)));
+            games.add((new Game(gameID, player, waitingTime,roundTime)));
         else {
-            gameId = games.size();
-            games.add(new Game(gameId, player, waitingTime, roundTime));
+            gameID = games.size();
+            games.add(new Game(gameID, player, waitingTime, roundTime));
         }
-        startWaitTimer(gameId);
+        startWaitTimer(player);
     }
 
     public static void joinGame(Player player){
@@ -74,12 +76,13 @@ public class Server{
         }
     }
 
-    public static void startGame(int gameId){
+    public static void startGame(Player player){
+        int gameId = checkPlayerGame(player);
         games.get(gameId).gameStart();
-        for (Player player : games.get(gameId).getPlayers()) {
-            playerWords.put(player.getUsername(), new ArrayList<>());
+        for (Player player1 : games.get(gameId).getPlayers()) {
+            playerWords.put(player1.getUsername(), new ArrayList<>());
         }
-        startRoundTimer(gameId);
+        startRoundTimer(player);
     }
 
     public static void setWaitingTime(int waitingTime){
@@ -112,8 +115,10 @@ public class Server{
         return false;
     }
 
-    public static void startWaitTimer(int gameId) {
+    public static void startWaitTimer(Player player) {
+        int gameId = checkPlayerGame(player);
         System.out.println(games);
+        System.out.println("game id: " + gameId);
         int temp = games.get(gameId).getWaitingTime();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -130,7 +135,7 @@ public class Server{
                         games.get(gameId).clearScores();
                         games.get(gameId).gameStart();
                         games.get(gameId).setWaitingTime(temp);
-                        startGame(gameId);
+                        startGame(player);
                     } else {
                         games.get(gameId).gameEnd();
                         if (!games.get(gameId).gameWinner().getUsername().equals("none")){
@@ -150,7 +155,9 @@ public class Server{
         timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
-    public static void startRoundTimer(int gameId) {
+    public static void startRoundTimer(Player player) {
+        int gameId = checkPlayerGame(player);
+        System.out.println("game id " + gameId);
         int temp = games.get(gameId).getRoundTime();
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -166,7 +173,7 @@ public class Server{
                     System.out.println("Round Ended!");
                     System.out.println(playerWords);
                     games.get(gameId).setRoundTime(temp);
-                    startWaitTimer(gameId);
+                    startWaitTimer(player);
                     timer.cancel();
                 }
             }
@@ -183,7 +190,8 @@ public class Server{
                 if (countdown > 0) {
                     countdown--;
                 } else {
-                    games.remove(gameId);
+                    games.get(gameId).removeAllPlayers();
+                    games.get(gameId).gameStart();
                     System.out.println(games);
                     timer.cancel();
                 }
